@@ -1,0 +1,7 @@
+C:\Users\s199009\source\repos\ServerBrowser\ServerBrowser\bin\Debug\ServerBrowser.exe.config
+C:\Users\s199009\source\repos\ServerBrowser\ServerBrowser\bin\Debug\ServerBrowser.exe
+C:\Users\s199009\source\repos\ServerBrowser\ServerBrowser\bin\Debug\ServerBrowser.pdb
+C:\Users\s199009\source\repos\ServerBrowser\ServerBrowser\obj\Debug\ServerBrowser.csprojAssemblyReference.cache
+C:\Users\s199009\source\repos\ServerBrowser\ServerBrowser\obj\Debug\ServerBrowser.csproj.CoreCompileInputs.cache
+C:\Users\s199009\source\repos\ServerBrowser\ServerBrowser\obj\Debug\ServerBrowser.exe
+C:\Users\s199009\source\repos\ServerBrowser\ServerBrowser\obj\Debug\ServerBrowser.pdb

@@ -1,0 +1,6 @@
+c:\users\s199009\source\repos\LearningVariables\LearningVariables\bin\Debug\LearningVariables.exe.config
+c:\users\s199009\source\repos\LearningVariables\LearningVariables\bin\Debug\LearningVariables.exe
+c:\users\s199009\source\repos\LearningVariables\LearningVariables\bin\Debug\LearningVariables.pdb
+c:\users\s199009\source\repos\LearningVariables\LearningVariables\obj\Debug\LearningVariables.csproj.CoreCompileInputs.cache
+c:\users\s199009\source\repos\LearningVariables\LearningVariables\obj\Debug\LearningVariables.exe
+c:\users\s199009\source\repos\LearningVariables\LearningVariables\obj\Debug\LearningVariables.pdb

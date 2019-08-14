@@ -1,0 +1,7 @@
+c:\users\s199009\source\repos\MyFirstProgram\MyFirstProgram\bin\Debug\MyFirstProgram.exe.config
+c:\users\s199009\source\repos\MyFirstProgram\MyFirstProgram\bin\Debug\MyFirstProgram.exe
+c:\users\s199009\source\repos\MyFirstProgram\MyFirstProgram\bin\Debug\MyFirstProgram.pdb
+c:\users\s199009\source\repos\MyFirstProgram\MyFirstProgram\obj\Debug\MyFirstProgram.csprojAssemblyReference.cache
+c:\users\s199009\source\repos\MyFirstProgram\MyFirstProgram\obj\Debug\MyFirstProgram.csproj.CoreCompileInputs.cache
+c:\users\s199009\source\repos\MyFirstProgram\MyFirstProgram\obj\Debug\MyFirstProgram.exe
+c:\users\s199009\source\repos\MyFirstProgram\MyFirstProgram\obj\Debug\MyFirstProgram.pdb

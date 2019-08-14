@@ -1,0 +1,7 @@
+C:\Users\s199009\source\repos\PropertiesTesting\PropertiesTesting\bin\Debug\PropertiesTesting.exe.config
+C:\Users\s199009\source\repos\PropertiesTesting\PropertiesTesting\bin\Debug\PropertiesTesting.exe
+C:\Users\s199009\source\repos\PropertiesTesting\PropertiesTesting\bin\Debug\PropertiesTesting.pdb
+C:\Users\s199009\source\repos\PropertiesTesting\PropertiesTesting\obj\Debug\PropertiesTesting.csproj.CoreCompileInputs.cache
+C:\Users\s199009\source\repos\PropertiesTesting\PropertiesTesting\obj\Debug\PropertiesTesting.exe
+C:\Users\s199009\source\repos\PropertiesTesting\PropertiesTesting\obj\Debug\PropertiesTesting.pdb
+C:\Users\s199009\source\repos\PropertiesTesting\PropertiesTesting\obj\Debug\PropertiesTesting.csprojAssemblyReference.cache

@@ -1,0 +1,7 @@
+C:\Users\s199009\source\repos\ClassesTests\ClassesTests\obj\Debug\ClassesTests.csprojAssemblyReference.cache
+C:\Users\s199009\source\repos\ClassesTests\ClassesTests\obj\Debug\ClassesTests.csproj.CoreCompileInputs.cache
+C:\Users\s199009\source\repos\ClassesTests\ClassesTests\bin\Debug\ClassesTests.exe.config
+C:\Users\s199009\source\repos\ClassesTests\ClassesTests\bin\Debug\ClassesTests.exe
+C:\Users\s199009\source\repos\ClassesTests\ClassesTests\bin\Debug\ClassesTests.pdb
+C:\Users\s199009\source\repos\ClassesTests\ClassesTests\obj\Debug\ClassesTests.exe
+C:\Users\s199009\source\repos\ClassesTests\ClassesTests\obj\Debug\ClassesTests.pdb

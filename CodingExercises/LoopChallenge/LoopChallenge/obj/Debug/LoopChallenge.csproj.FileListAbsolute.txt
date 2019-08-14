@@ -1,0 +1,7 @@
+C:\Users\s199009\source\repos\LoopChallenge\LoopChallenge\bin\Debug\LoopChallenge.exe.config
+C:\Users\s199009\source\repos\LoopChallenge\LoopChallenge\bin\Debug\LoopChallenge.exe
+C:\Users\s199009\source\repos\LoopChallenge\LoopChallenge\bin\Debug\LoopChallenge.pdb
+C:\Users\s199009\source\repos\LoopChallenge\LoopChallenge\obj\Debug\LoopChallenge.csprojAssemblyReference.cache
+C:\Users\s199009\source\repos\LoopChallenge\LoopChallenge\obj\Debug\LoopChallenge.csproj.CoreCompileInputs.cache
+C:\Users\s199009\source\repos\LoopChallenge\LoopChallenge\obj\Debug\LoopChallenge.exe
+C:\Users\s199009\source\repos\LoopChallenge\LoopChallenge\obj\Debug\LoopChallenge.pdb

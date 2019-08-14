@@ -1,0 +1,7 @@
+C:\Users\s199009\source\repos\FunctionsExercise\FunctionsExercise\bin\Debug\FunctionsExercise.exe.config
+C:\Users\s199009\source\repos\FunctionsExercise\FunctionsExercise\bin\Debug\FunctionsExercise.exe
+C:\Users\s199009\source\repos\FunctionsExercise\FunctionsExercise\bin\Debug\FunctionsExercise.pdb
+C:\Users\s199009\source\repos\FunctionsExercise\FunctionsExercise\obj\Debug\FunctionsExercise.csprojAssemblyReference.cache
+C:\Users\s199009\source\repos\FunctionsExercise\FunctionsExercise\obj\Debug\FunctionsExercise.csproj.CoreCompileInputs.cache
+C:\Users\s199009\source\repos\FunctionsExercise\FunctionsExercise\obj\Debug\FunctionsExercise.exe
+C:\Users\s199009\source\repos\FunctionsExercise\FunctionsExercise\obj\Debug\FunctionsExercise.pdb

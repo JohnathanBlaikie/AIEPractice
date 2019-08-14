@@ -1,0 +1,7 @@
+C:\Users\s199009\source\repos\TVMulti\TVMulti\bin\Debug\TVMulti.exe.config
+C:\Users\s199009\source\repos\TVMulti\TVMulti\bin\Debug\TVMulti.exe
+C:\Users\s199009\source\repos\TVMulti\TVMulti\bin\Debug\TVMulti.pdb
+C:\Users\s199009\source\repos\TVMulti\TVMulti\obj\Debug\TVMulti.csproj.CoreCompileInputs.cache
+C:\Users\s199009\source\repos\TVMulti\TVMulti\obj\Debug\TVMulti.exe
+C:\Users\s199009\source\repos\TVMulti\TVMulti\obj\Debug\TVMulti.pdb
+C:\Users\s199009\source\repos\TVMulti\TVMulti\obj\Debug\TVMulti.csprojAssemblyReference.cache

@@ -1,0 +1,7 @@
+C:\Users\s199009\source\repos\AgeGate\AgeGate\bin\Debug\AgeGate.exe.config
+C:\Users\s199009\source\repos\AgeGate\AgeGate\bin\Debug\AgeGate.exe
+C:\Users\s199009\source\repos\AgeGate\AgeGate\bin\Debug\AgeGate.pdb
+C:\Users\s199009\source\repos\AgeGate\AgeGate\obj\Debug\AgeGate.csproj.CoreCompileInputs.cache
+C:\Users\s199009\source\repos\AgeGate\AgeGate\obj\Debug\AgeGate.exe
+C:\Users\s199009\source\repos\AgeGate\AgeGate\obj\Debug\AgeGate.pdb
+C:\Users\s199009\source\repos\AgeGate\AgeGate\obj\Debug\AgeGate.csprojAssemblyReference.cache
