@@ -34,7 +34,7 @@ namespace FunctionsExercise
                 {
                     want2Retry = true;
                 }
-                if (answer == 'n')
+                else if (answer == 'n')
                 {
                     want2Retry = false;
                 }
