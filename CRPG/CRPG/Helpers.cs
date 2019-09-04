@@ -24,6 +24,9 @@ namespace CRPG
             Console.WriteLine(dSum);
             return dSum;
         }
+
+        //This is a set of randoms that operate on the DnD stat rules of: 
+        //Roll 4d6, drop the lowest number, and add the remaining 3 to get your skill value.
         public int StatRoll(int dSum)
         {
             int[] d = new int[4];
@@ -35,53 +38,57 @@ namespace CRPG
             d[0] = 0;
             dSum = d.Sum();
             return dSum;
-            //Console.WriteLine($"{d[0]}, {d[1]}, {d[2]}, {d[3]}");
-            //Console.ReadKey();
-            //Array.Sort(d);
-            //Console.WriteLine($"{d[0]}, {d[1]}, {d[2]}, {d[3]}");
-            //Console.ReadKey();
-            //d[0] = 0;
-            //Console.WriteLine($"{d[0]}, {d[1]}, {d[2]}, {d[3]}");
-            //Console.ReadKey();
-            //dSum = d.Sum();
-            //Console.WriteLine(dSum);
-            //Console.ReadKey();
-
         }
+
+        //This is what allows the user to create a new character
         public Player NewCharacter()
         {
-            int[] tempstats = new int[5];
-            int[] stats = new int[5];
             string temp, temp2, temp3, temp4;
             sC.TB("\t Enter Your Character's Name");
             p.name = sC.RL("");
-            //for (int i = 0; i < 5; i++)
-            //{
-            //    tempstats[i] = h.StatRoll(0);
-            //}
             temp = sC.WRL("Press R to roll for Strength");
             if (temp == "r")
             {
+                Console.Clear();
+                Console.WriteLine("Rolling...");
+                //sC.STTS(1);
+                //Console.Clear();
                 Console.WriteLine($"Strength: {p.Str = StatRoll(0)}");
             }
             temp2 = sC.WRL("Press R to roll for Dexterity");
             if (temp2 == "r")
             {
+                Console.Clear();
+                Console.WriteLine("Rolling...");
+                //sC.STTS(1);
+                //Console.Clear();
                 Console.WriteLine($"Dexterity: {p.Dex = StatRoll(0)}");
             }
             temp3 = sC.WRL("Press R to roll for Intelligence");
             if (temp3 == "r")
             {
+                Console.Clear();
+                Console.WriteLine("Rolling...");
+                //sC.STTS(1);
+                //Console.Clear();
                 Console.WriteLine($"Intelligence: {p.Int = StatRoll(0)}");
             }
             temp4 = sC.WRL("Press R to roll for Constitution");
             if (temp4 == "r")
             {
+                Console.Clear();
+                Console.WriteLine("Rolling...");
+                //sC.STTS(1);
+                //Console.Clear();
                 Console.WriteLine($"Constitution: {p.Con = StatRoll(0)}");
             }
             temp4 = sC.WRL("Press R to roll for Perception");
             if (temp4 == "r")
             {
+                Console.Clear();
+                Console.WriteLine("Rolling...");
+                //sC.STTS(1);
+                //Console.Clear();
                 Console.WriteLine($"Perception: {p.Per = StatRoll(0)}");
                 return p;
             }

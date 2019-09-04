@@ -13,22 +13,43 @@ namespace CRPG
         static void Main(string[] args)
         {
             bool close = false;
+            bool loadNew = true;
             ShortCuts sC = new ShortCuts();
             Helpers h = new Helpers();
             Player p = new Player();
+
+            //Weapons[] weap = new Weapons[2];
+            //weap[0] = ("Rusty repeater", 10, 10, 2, 2);
+            //ArraySegment<Weapons> myArmory = new ArraySegment<Weapons>();
+            //myArmory.
+
             sC.TB("CRPG NAME HERE");
             Console.WriteLine("Press Enter to begin...");
             sC.RL("");
-            Console.WriteLine("Would You Like to [L]oad a Save or Start a [N]ew Adventure?");
-            string LN = sC.RL("");
-            if(LN == "n")
+            while (loadNew)
             {
-                p = h.NewCharacter();
+                Console.WriteLine("Would You Like to [L]oad a Save or Start a [N]ew Adventure?");
+                string LN = sC.RL("");
+                if (LN == "n")
+                {
+                    p = h.NewCharacter();
+                    loadNew = false;
+                }
+                else if (LN == "l")
+                {
+                    p.LoadSave();
+                    loadNew = false;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid Command.");
+                }
             }
             while (!close)
             {
                 Console.WriteLine("Type [c] to check your stats, [r] to randomize your stats, \n[v] to view your last save, [l] to load your pervious save, or [s] to overwrite it.");
                 string tempchar = sC.RL("");
+                Console.Clear();
                 if (tempchar == "v")
                 {
                     p.CheckSave();
@@ -74,7 +95,6 @@ namespace CRPG
                 {
                     Console.WriteLine("Invalid Command");
                 }
-               
             }
         }
     }

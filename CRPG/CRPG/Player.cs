@@ -13,6 +13,7 @@ namespace CRPG
         Random r = new Random();
         public string name;
         public int Str, Dex, Int, Con, Per, Gold;
+        private string nameP;
         private int StrP, DexP, IntP, ConP, PerP, GoldP;
         public void LoadSave()
         {
@@ -27,14 +28,14 @@ namespace CRPG
         }
         public void CheckSave()
         {
-            name = sC.FRL(0);
+            nameP = sC.FRL(0);
             sC.ITP(sC.FRL(1), ref StrP);
             sC.ITP(sC.FRL(2), ref DexP);
             sC.ITP(sC.FRL(3), ref IntP);
             sC.ITP(sC.FRL(4), ref ConP);
             sC.ITP(sC.FRL(5), ref PerP);
             sC.ITP(sC.FRL(6), ref GoldP);
-            Console.WriteLine($" Name: {name}\n Strength: {StrP}\n Dexterity: {DexP}\n Intelligence: {IntP}\n Constitution: {ConP}\n Perception: {PerP}\n Gold: {GoldP}");
+            Console.WriteLine($" Name: {nameP}\n Strength: {StrP}\n Dexterity: {DexP}\n Intelligence: {IntP}\n Constitution: {ConP}\n Perception: {PerP}\n Gold: {GoldP}");
         }
         public void CheckStats()
         {

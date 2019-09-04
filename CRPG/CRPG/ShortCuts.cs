@@ -29,9 +29,9 @@ namespace CRPG
             rL = Console.ReadLine();
             return rL;
         }
-        public string RK(string rK)
+        public char RK(char rK)
         {
-            rK = Console.ReadKey().ToString();
+            rK = char.ToLower(Console.ReadKey(true).KeyChar);
             return rK;
         }
         //Helper function that reads from a specific line
@@ -44,7 +44,20 @@ namespace CRPG
         {
             int.TryParse(x, out y);
         }
+        //int.TryParse but with POLYMORPHISM!
+        public void ITP(string a, ref int b, string x, ref int y)
+        {
+            int.TryParse(a, out b);
+            int.TryParse(x, out y);
+        }
+        //This pauses the script from running for 'x' seconds. 
+        //It's multiplied by 1000 for the sake of convenience, as 1000 = 1 second.
+        public void STTS(int x)
+        {
+            System.Threading.Thread.Sleep(x*1000);
+        }
 
+        
         //public string FWL(string fWL)
         //{
         //    StreamWriter writer = new StreamWriter("test.txt");
