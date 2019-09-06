@@ -20,7 +20,7 @@ namespace CRPG
         public int price;
         public int bDamage;
         public int StrMod;
-        public int DexMod = p.de;
+        public int DexMod;
         public int truDamage;
         public int maxRange;
         public int ammoPerShot;
@@ -72,7 +72,7 @@ namespace CRPG
             weapons.maxRange = 50;
             weapons.ammoPerShot = 1;
             weapons.ammoInMag = 6;
-            Arsenal[2] = weapons;
+            Arsenal[3] = weapons;
         }
     }
     
