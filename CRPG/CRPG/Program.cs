@@ -9,7 +9,6 @@ namespace CRPG
 {
     class Program
     {
-        //
         static void Main(string[] args)
         {
             bool close = false;
@@ -17,7 +16,7 @@ namespace CRPG
             ShortCuts sC = new ShortCuts();
             Helpers h = new Helpers();
             Player p = new Player();
-
+            Locations l = new Locations();
             //Weapons[] weap = new Weapons[2];
             //weap[0] = ("Rusty repeater", 10, 10, 2, 2);
             //ArraySegment<Weapons> myArmory = new ArraySegment<Weapons>();
@@ -47,6 +46,7 @@ namespace CRPG
             }
             while (!close)
             {
+                //l.TownEntrance();   
                 Console.WriteLine("Type [c] to check your stats, [r] to randomize your stats, \n[v] to view your last save, [l] to load your pervious save, or [s] to overwrite it.");
                 string tempchar = sC.RL("");
                 Console.Clear();

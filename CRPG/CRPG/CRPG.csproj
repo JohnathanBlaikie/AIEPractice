@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Helpers.cs" />
     <Compile Include="Items.cs" />
+    <Compile Include="Locations.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
