@@ -9,18 +9,21 @@ namespace CRPG
 {
     class Program
     {
+           public  static Player p = new Player();
         static void Main(string[] args)
         {
+            
+            int Location = 0;
+            bool first = true;
             bool close = false;
             bool loadNew = true;
             ShortCuts sC = new ShortCuts();
             Helpers h = new Helpers();
-            Player p = new Player();
             Locations l = new Locations();
-            //Weapons[] weap = new Weapons[2];
-            //weap[0] = ("Rusty repeater", 10, 10, 2, 2);
-            //ArraySegment<Weapons> myArmory = new ArraySegment<Weapons>();
-            //myArmory.
+            Weapons w = new Weapons();
+            
+            
+            w.ArsenalInstantiation();
 
             sC.TB("CRPG NAME HERE");
             Console.WriteLine("Press Enter to begin...");
@@ -28,15 +31,17 @@ namespace CRPG
             while (loadNew)
             {
                 Console.WriteLine("Would You Like to [L]oad a Save or Start a [N]ew Adventure?");
-                string LN = sC.RL("");
-                if (LN == "n")
+                char LN = sC.RK(' ');
+                if (LN == 'n')
                 {
                     p = h.NewCharacter();
+                    Location = 0;
                     loadNew = false;
                 }
-                else if (LN == "l")
+                else if (LN == 'l')
                 {
                     p.LoadSave();
+                    Location = p.Location;
                     loadNew = false;
                 }
                 else
@@ -46,50 +51,72 @@ namespace CRPG
             }
             while (!close)
             {
-                //l.TownEntrance();   
-                Console.WriteLine("Type [c] to check your stats, [r] to randomize your stats, \n[v] to view your last save, [l] to load your pervious save, or [s] to overwrite it.");
-                string tempchar = sC.RL("");
+
+                if (Location == 0)
+                {
+                    l.TownEntrance();
+                    Location++;
+                }
+                if (Location == 1)
+                {
+                    l.TownSquare();
+
+                }
+                
+
+                Console.WriteLine("Type [C] to check your stats, or [V] to view your last save");
+                char tempchar = sC.RK(' ');
                 Console.Clear();
-                if (tempchar == "v")
+                if (tempchar == 'v')
                 {
-                    p.CheckSave();
-                }
-                else if (tempchar == "c")
-                {
+                    bool savestate = true;
+                    Console.WriteLine($"Current Stats:");
                     p.CheckStats();
-                }
-                else if (tempchar == "r")
-                {
-                    p.RandomStats();
-                }
-                else if (tempchar == "s")
-                {
-                    p.SaveStats();
-                }
-                else if (tempchar == "l")
-                {
-                    p.LoadSave();
-                }
-                else if (tempchar == "q")
-                {
-                    close = true;
-                }
-                else if (tempchar == "roll")
-                {
-                    bool dicechecker = false;
-                    while (dicechecker == false)
+                    Console.WriteLine("\nPrevious Save:");
+                    p.CheckSave();
+                    Console.WriteLine("\nPress [L] to load your pervious save, or [S] to overwrite it.\n\nPress [E] to Exit\n");
+                    while (savestate)
                     {
-                        string tempchar2 = sC.RL("");
-                        h.StatRoll(0);
-                        if(tempchar2 == "ok")
+                        tempchar = sC.RK(' ');
+                        if (tempchar == 's')
                         {
-                            dicechecker = true;
+                            p.SaveStats();
+                            savestate = false;
+                        }
+                        else if (tempchar == 'l')
+                        {
+                            p.LoadSave();
+                            savestate = false;
+                        }
+                        else if (tempchar == 'e')
+                        {
+                            savestate = false;
                         }
                         else
                         {
-
+                            Console.WriteLine("Invalid command");
                         }
                     }
+                }
+                else if (tempchar == 'c')
+                {
+                    p.CheckStats();
+                }
+                else if (tempchar == 'r')
+                {
+                    p.RandomStats();
+                }
+                else if (tempchar == 's')
+                {
+                    l.Shop();
+                }
+                else if (tempchar == 'q')
+                {
+                    close = true;
+                }
+                else if (tempchar == 'w')
+                {
+                    w.ArsenalListing();
                 }
                 else
                 {

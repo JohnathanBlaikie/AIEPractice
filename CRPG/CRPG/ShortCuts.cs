@@ -23,6 +23,7 @@ namespace CRPG
             rL = Console.ReadLine();
             return rL;
         }
+        //Shortcut for a writeline, followed by a readline to pause or read inputs.
         public string WRL(string rL)
         {
             Console.WriteLine(rL);
