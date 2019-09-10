@@ -15,7 +15,7 @@ namespace CRPG
         public string name;
         public int Str, Dex, Int, Con, Per, Gold, Location;
         private string nameP;
-        private int StrP, DexP, IntP, ConP, PerP, GoldP, PhaseP;
+        private int StrP, DexP, IntP, ConP, PerP, GoldP, LocationP;
         public void LoadSave()
         {
             Console.Clear();
@@ -27,16 +27,23 @@ namespace CRPG
             sC.ITP(sC.FRL(5),ref Per);
             sC.ITP(sC.FRL(6),ref Gold);
             sC.ITP(sC.FRL(7), ref Location);
-            Console.WriteLine($" Name: {name}\n Strength: {Str}\n Dexterity: {Dex}\n Intelligence: {Int}\n Constitution: {Con}\n Perception: {Per}\n Gold: {Gold}");
-            foreach (Weapons w in Weapons.WeaponCheck)
+            //Weapons.WeaponsOwned = Weapons.PreviousSave;
+            Console.WriteLine($" Name: {name}\n Strength: {Str}\n Dexterity: {Dex}" +
+                $"\n Intelligence: {Int}\n Constitution: {Con}\n Perception: {Per}\n Gold: {Gold}");
+            using (StreamReader sR = new StreamReader("PlayerInv.csv"))
             {
-                if (w.ownedByPlayer == true)
+                foreach (Weapons w in Weapons.PreviousSave)
                 {
-                    Console.WriteLine($" {w.name}");
+                    Weapons temp = new Weapons();
+
                 }
             }
+            foreach (Weapons w in Weapons.WeaponsOwned)
+            {
+                Console.WriteLine($" {w.name}");  
+            }
         }
-        public void CheckSave()
+        public void CheckSave()//Looks at the previous save and displays its information
         {
             nameP = sC.FRL(0);
             sC.ITP(sC.FRL(1), ref StrP);
@@ -45,29 +52,14 @@ namespace CRPG
             sC.ITP(sC.FRL(4), ref ConP);
             sC.ITP(sC.FRL(5), ref PerP);
             sC.ITP(sC.FRL(6), ref GoldP);
-            sC.ITP(sC.FRL(7), ref PhaseP);
+            sC.ITP(sC.FRL(7), ref LocationP);
             Console.WriteLine($" Name: {nameP}\n Strength: {StrP}\n Dexterity: {DexP}\n Intelligence: {IntP}\n Constitution: {ConP}\n Perception: {PerP}\n Gold: {GoldP}");
-            StreamReader sr = new StreamReader("PlayerInv.csv");
-            foreach(Weapons w in Weapons.WeaponsOwned)
+            foreach (Weapons w in Weapons.PreviousSave)
             {
-                Console.WriteLine(w.name);
+                Console.WriteLine($" {w.name}");
             }
-          
-
-            //foreach (Weapons w in Weapons.WeaponCheck)
-            //{
-            //    if (Weapons.WeaponsOwned.)
-            //    {
-            //        Console.WriteLine($" {w.name}");
-            //    }
-
-            //    //if (w.ownedByPlayer == true)
-            //    //{
-            //    //    Console.WriteLine($" {w.name}");
-            //    //}
-            //}
         }
-        public void CheckStats()
+        public void CheckStats()//Looks at the current information of the player that has yet to be saved
         {
             Console.WriteLine($" Name: {name}\n Strength: {Str}\n Dexterity: {Dex}\n Intelligence: {Int}\n Constitution: {Con}\n Perception: {Per}\n Gold: {Gold}");
 
@@ -75,14 +67,6 @@ namespace CRPG
             {
                 Console.WriteLine($" {w.name}");
             }
-
-            //foreach (Weapons w in Weapons.WeaponCheck)
-            //{
-            //    if (w.ownedByPlayer == true)
-            //    {
-            //        Console.WriteLine($" {w.name}");
-            //    }
-            //}
         }
         public void RandomStats()
         {
@@ -92,7 +76,7 @@ namespace CRPG
             Int = r.Next(2, 20);
             Per = r.Next(2, 20);
         }
-        public void SaveStats()
+        public void SaveStats()//saves the player's current information.
         {
             StreamWriter writer = new StreamWriter("test.txt");
             writer.WriteLine(name);
@@ -104,34 +88,18 @@ namespace CRPG
             writer.WriteLine(Gold);
             writer.WriteLine(Location);
             writer.Close();
-            //using (StreamWriter w = new StreamWriter("WeaponStats1.csv"))
-            //{
-            //    w.WriteLine("Weapon Name,Price,Range (yd),Base Damage,Str Mod,Dex Mod,True Damage,Ammo Per Shot,Ammo in Mag,Owned by Player?");
-            //    foreach (Weapons wp in Weapons.WeaponCheck)
-            //    {
-            //        //w.WriteLine("Weapon Name,Price,Range (yd),Base Damage,Str Mod,Dex Mod,True Damage,Ammo Per Shot,Ammo in Mag,Owned by Player?");
-            //        w.WriteLine($"{wp.name},{wp.price},{wp.maxRange},{wp.bDamage},{wp.StrMod},{wp.DexMod},{wp.truDamage},{wp.ammoPerShot},{wp.ammoInMag},{wp.ownedByPlayer}");
-                    
-            //    }
-            //    w.Close();
-            //}
             using (StreamWriter w = new StreamWriter("PlayerInv.csv"))
             {
-                foreach(Weapons wp in Weapons.WeaponCheck)
+                foreach(Weapons wp in Weapons.WeaponsOwned)
                 {
-                    if(wp.ownedByPlayer == true)
-                    {
                         w.WriteLine($"{wp.name},{wp.price},{wp.maxRange},{wp.bDamage},{wp.StrMod},{wp.DexMod},{wp.truDamage},{wp.ammoPerShot},{wp.ammoInMag},{wp.ownedByPlayer}");
-                    }
-                    else
-                    {
-
-                    }
+                        
                 }
                 w.Close();
             }
-            
-            
+            weapons.ArsenalInstantiation();
+            weapons.InventoryInstantiation();
+            Weapons.PreviousSave = Weapons.WeaponsOwned;
           
         }
 

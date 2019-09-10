@@ -21,9 +21,10 @@ namespace CRPG
             Helpers h = new Helpers();
             Locations l = new Locations();
             Weapons w = new Weapons();
-            
-            
+
             w.ArsenalInstantiation();
+            w.PreviousSaveCheck();
+            w.InventoryInstantiation();
 
             sC.TB("CRPG NAME HERE");
             Console.WriteLine("Press Enter to begin...");
@@ -40,6 +41,7 @@ namespace CRPG
                 }
                 else if (LN == 'l')
                 {
+                    //w.InventoryInstantiation();
                     p.LoadSave();
                     Location = p.Location;
                     loadNew = false;
@@ -55,12 +57,12 @@ namespace CRPG
                 if (Location == 0)
                 {
                     l.TownEntrance();
-                    Location++;
+                    Location = 1;
                 }
                 if (Location == 1)
                 {
+                    p.Location = 1;
                     l.TownSquare();
-
                 }
                 
 
@@ -85,11 +87,13 @@ namespace CRPG
                         }
                         else if (tempchar == 'l')
                         {
+                            //w.InventoryInstantiation();
                             p.LoadSave();
                             savestate = false;
                         }
                         else if (tempchar == 'e')
                         {
+                            Console.Clear();
                             savestate = false;
                         }
                         else
@@ -117,6 +121,8 @@ namespace CRPG
                 else if (tempchar == 'w')
                 {
                     w.ArsenalListing();
+                    Console.WriteLine("Press Enter to Continue");
+                    sC.RL("");
                 }
                 else
                 {

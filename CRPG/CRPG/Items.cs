@@ -20,6 +20,7 @@ namespace CRPG
         //public int itemID;
         public static List<Weapons> WeaponCheck = new List<Weapons>();
         public static List<Weapons> WeaponsOwned = new List<Weapons>();
+        public static List<Weapons> PreviousSave = new List<Weapons>();
         public string name;
         public int price, bDamage, StrMod, DexMod, truDamage, maxRange, ammoPerShot, ammoInMag;
         public bool ownedByPlayer;
@@ -35,7 +36,6 @@ namespace CRPG
                     string line = sr.ReadLine();
                     string[] Values = line.Split(',');
                     Weapons tmpWeapon = new Weapons();
-                    //tmpWeapon.itemID = int.Parse(Values[0]);
                     tmpWeapon.name = Values[0];
                     tmpWeapon.price = int.Parse(Values[1]);
                     tmpWeapon.maxRange = int.Parse(Values[2]);
@@ -67,7 +67,6 @@ namespace CRPG
                     string line = sr.ReadLine();
                     string[] Values = line.Split(',');
                     Weapons tmpWeapon = new Weapons();
-                    //tmpWeapon.itemID = int.Parse(Values[0]);
                     tmpWeapon.name = Values[0];
                     tmpWeapon.price = int.Parse(Values[1]);
                     tmpWeapon.maxRange = int.Parse(Values[2]);
@@ -81,8 +80,66 @@ namespace CRPG
                     WeaponCheck.Add(tmpWeapon);
                 }
             }
+            
         }
-
+        public void InventoryInstantiation()
+        {
+            using (StreamReader sr = new StreamReader("PlayerInv.csv"))
+            {
+                while (!sr.EndOfStream)
+                {
+                    string line = sr.ReadLine();
+                    string[] Values = line.Split(',');
+                    Weapons tmpWeapon = new Weapons();
+                    //tmpWeapon.itemID = int.Parse(Values[0]);
+                    tmpWeapon.name = Values[0];
+                    tmpWeapon.price = int.Parse(Values[1]);
+                    tmpWeapon.maxRange = int.Parse(Values[2]);
+                    tmpWeapon.bDamage = int.Parse(Values[3]);
+                    tmpWeapon.StrMod = int.Parse(Values[4]);
+                    tmpWeapon.DexMod = int.Parse(Values[5]);
+                    //tmpWeapon.truDamage = int.Parse(Values[6]);
+                    tmpWeapon.ammoPerShot = int.Parse(Values[7]);
+                    tmpWeapon.ammoInMag = int.Parse(Values[8]);
+                    tmpWeapon.ownedByPlayer = bool.Parse(Values[9]);
+                    WeaponsOwned.Add(tmpWeapon);
+                }
+            }
+        }
+        public void PreviousSaveCheck()
+        {
+            using (StreamReader sr = new StreamReader("PlayerInv.csv"))
+            {
+                while (!sr.EndOfStream)
+                {
+                    string line = sr.ReadLine();
+                    string[] Values = line.Split(',');
+                    Weapons tmpWeapon = new Weapons();
+                    tmpWeapon.name = Values[0];
+                    tmpWeapon.price = int.Parse(Values[1]);
+                    tmpWeapon.maxRange = int.Parse(Values[2]);
+                    tmpWeapon.bDamage = int.Parse(Values[3]);
+                    tmpWeapon.StrMod = int.Parse(Values[4]);
+                    tmpWeapon.DexMod = int.Parse(Values[5]);
+                    //tmpWeapon.truDamage = int.Parse(Values[6]);
+                    tmpWeapon.ammoPerShot = int.Parse(Values[7]);
+                    tmpWeapon.ammoInMag = int.Parse(Values[8]);
+                    tmpWeapon.ownedByPlayer = bool.Parse(Values[9]);
+                    PreviousSave.Add(tmpWeapon);
+                }
+            }
+        }
+        public void weaponSave()
+        {
+            
+            using (StreamWriter sw = new StreamWriter("PlayerInv.csv"))
+            {
+                foreach (Weapons w in WeaponsOwned)
+                {
+                 //   PreviousSave
+                }
+            }
+        }
 
         void WeaponList()
         {
