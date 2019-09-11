@@ -44,11 +44,23 @@ namespace CRPG
             dSum = d.Sum();
             return dSum;
         }
-        
-        //This is what allows the user to create a new character.
+
         public Player NewCharacter()
         {
-            string temp, temp2, temp3, temp4;
+            string temp, temp2, temp3, temp4, temp5;
+
+            //foreach (Weapons w in Weapons.WeaponCheck)
+            //{
+            //    if (w.ownedByPlayer == true)
+            //    {
+            //        Weapons.WeaponsOwned.Add(w);
+            //    }
+            //    else
+            //    {
+            //        Weapons.WeaponsOwned.Remove(w);
+            //    }
+            //}
+
             sC.TB("\t Enter Your Character's Name");
             p.name = sC.RL("");
             temp = sC.WRL("Press R to roll for Strength");
@@ -79,20 +91,21 @@ namespace CRPG
                 Console.WriteLine("Rolling...");
                 Console.WriteLine($"Constitution: {p.Con = StatRoll(0)}");
             }
-            temp4 = sC.WRL("Press R to roll for Perception");
-            if (temp4 == "r")
+            temp5 = sC.WRL("Press R to roll for Perception");
+            if (temp5 == "r")
             {
                 Console.Clear();
                 Console.WriteLine("Rolling...");
                 Console.WriteLine($"Perception: {p.Per = StatRoll(0)}");
                 return p;
-            } 
-                
+            }
+
             else
             {
                 Console.WriteLine("invalid command");
                 return null;
             }
+
         }
 
     }

@@ -16,6 +16,9 @@ namespace CRPG
         public int Str, Dex, Int, Con, Per, Gold, Location;
         private string nameP;
         private int StrP, DexP, IntP, ConP, PerP, GoldP, LocationP;
+
+        //This is what allows the user to create a new character.
+       
         public void LoadSave()
         {
             Console.Clear();
@@ -35,7 +38,18 @@ namespace CRPG
                 foreach (Weapons w in Weapons.PreviousSave)
                 {
                     Weapons temp = new Weapons();
-
+                    string line = sR.ReadLine();
+                    string[] Values = line.Split(',');
+                    temp.name = Values[0];
+                    temp.price = int.Parse(Values[1]);
+                    temp.maxRange = int.Parse(Values[2]);
+                    temp.bDamage = int.Parse(Values[3]);
+                    temp.StrMod = int.Parse(Values[4]);
+                    temp.DexMod = int.Parse(Values[5]);
+                    temp.ammoPerShot = int.Parse(Values[7]);
+                    temp.ammoInMag = int.Parse(Values[8]);
+                    temp.ownedByPlayer = bool.Parse(Values[9]);
+                    Weapons.WeaponsOwned.Add(temp);
                 }
             }
             foreach (Weapons w in Weapons.WeaponsOwned)
@@ -99,7 +113,6 @@ namespace CRPG
             }
             weapons.ArsenalInstantiation();
             weapons.InventoryInstantiation();
-            Weapons.PreviousSave = Weapons.WeaponsOwned;
           
         }
 
