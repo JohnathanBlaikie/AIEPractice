@@ -41,10 +41,17 @@ namespace CRPG
                 }
                 else if (LN == 'l')
                 {
-                    //w.InventoryInstantiation();
-                    p.LoadSave();
-                    Location = p.Location;
-                    loadNew = false;
+                    try
+                    {
+                        //w.InventoryInstantiation();
+                        p.LoadSave();
+                        Location = p.Location;
+                        loadNew = false;
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Invalid data! please create a new character.");
+                    }
                 }
                 else
                 {
@@ -61,8 +68,8 @@ namespace CRPG
                 }
                 if (Location == 1)
                 {
-                    p.Location = 1;
                     l.TownSquare();
+                    p.Location = 1;
                 }
                 
 

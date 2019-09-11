@@ -37,7 +37,7 @@ namespace CRPG
         }
         public void Shop()
         {
-            sC.TB($"TEST\nFIX THIS LATER!");
+            sC.TB($"\"Welcome to Mom & Pop's Firearm Shoppe!\"\nSays the bespectacled man behind the counter.");
             string test= sC.WRL("TOGGLE TESTING");
             if (test == "s")
             {

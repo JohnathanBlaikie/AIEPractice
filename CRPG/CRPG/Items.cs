@@ -48,6 +48,7 @@ namespace CRPG
                     tmpWeapon.ownedByPlayer = bool.Parse(Values[9]);
                     WeaponCheck.Add(tmpWeapon);
                 }
+                sr.Close();
             }
             foreach (Weapons it in WeaponCheck)
             {
@@ -79,6 +80,7 @@ namespace CRPG
                     tmpWeapon.ownedByPlayer = bool.Parse(Values[9]);
                     WeaponCheck.Add(tmpWeapon);
                 }
+                sr.Close();
             }
             
         }
@@ -104,6 +106,7 @@ namespace CRPG
                     tmpWeapon.ownedByPlayer = bool.Parse(Values[9]);
                     WeaponsOwned.Add(tmpWeapon);
                 }
+                sr.Close();
             }
         }
         public void PreviousSaveCheck()
@@ -127,19 +130,10 @@ namespace CRPG
                     tmpWeapon.ownedByPlayer = bool.Parse(Values[9]);
                     PreviousSave.Add(tmpWeapon);
                 }
+                sr.Close();
             }
         }
-        public void weaponSave()
-        {
-            
-            using (StreamWriter sw = new StreamWriter("PlayerInv.csv"))
-            {
-                foreach (Weapons w in WeaponsOwned)
-                {
-                    
-                }
-            }
-        }
+        
 
         void WeaponList()
         {

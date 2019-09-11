@@ -60,7 +60,14 @@ namespace CRPG
             //        Weapons.WeaponsOwned.Remove(w);
             //    }
             //}
-
+            Weapons.WeaponsOwned.Clear();
+            foreach(Weapons w in Weapons.WeaponCheck)
+            {
+                if (w.ownedByPlayer == true)
+                {
+                    Weapons.WeaponsOwned.Add(w);
+                }
+            }
             sC.TB("\t Enter Your Character's Name");
             p.name = sC.RL("");
             temp = sC.WRL("Press R to roll for Strength");
