@@ -38,7 +38,7 @@ namespace CRPG
         //Helper function that reads from a specific line
         public string FRL(int x)
         {
-            return File.ReadLines("test.txt").ElementAt(x);
+                return File.ReadLines("test.txt").ElementAt(x);
         }
         //Int.TryParse
         public void ITP(string x, ref int y)

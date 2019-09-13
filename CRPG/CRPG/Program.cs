@@ -23,7 +23,13 @@ namespace CRPG
             Weapons w = new Weapons();
 
             w.ArsenalInstantiation();
-            w.PreviousSaveCheck();
+
+            try { w.PreviousSaveCheck(); }
+            catch
+            {
+                StreamWriter sW = new StreamWriter("PlayerInv.csv");
+                sW.Close();
+            }
             w.InventoryInstantiation();
 
             sC.TB("CRPG NAME HERE");
@@ -82,7 +88,8 @@ namespace CRPG
                     Console.WriteLine($"Current Stats:");
                     p.CheckStats();
                     Console.WriteLine("\nPrevious Save:");
-                    p.CheckSave();
+                    try { p.CheckSave(); }
+                    catch { Console.WriteLine("No Existing Previous Save."); }
                     Console.WriteLine("\nPress [L] to load your pervious save, or [S] to overwrite it.\n\nPress [E] to Exit\n");
                     while (savestate)
                     {
@@ -94,9 +101,17 @@ namespace CRPG
                         }
                         else if (tempchar == 'l')
                         {
-                            //w.InventoryInstantiation();
-                            p.LoadSave();
-                            savestate = false;
+                            try
+                            {
+                                //w.InventoryInstantiation();
+                                p.LoadSave();
+                                Location = p.Location;
+                                loadNew = false;
+                            }
+                            catch
+                            {
+                                Console.WriteLine("Save data is invalid or corrupt. Please make a new save file.");
+                            }
                         }
                         else if (tempchar == 'e')
                         {

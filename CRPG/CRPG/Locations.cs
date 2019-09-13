@@ -38,22 +38,31 @@ namespace CRPG
         public void Shop()
         {
             sC.TB($"\"Welcome to Mom & Pop's Firearm Shoppe!\"\nSays the bespectacled man behind the counter.");
-            string test= sC.WRL("TOGGLE TESTING");
+            foreach(Weapons w in Weapons.WeaponCheck)
+            {
+                Console.WriteLine($"Name: {w.name}\nDamage: {w.bDamage}\nRange: {w.maxRange}\nPrice: {w.price}\n");
+            }
+
+            string test = sC.WRL($"Your Gold:{p.Gold}\nChoose a weapon to purchase.");
             if (test == "s")
             {
                 //gives player shotgun
-                foreach(Weapons wep in Weapons.WeaponCheck)
+                foreach (Weapons wep in Weapons.WeaponCheck)
                 {
                     if (wep.name == "Double-Barrel Shotgun")
                     {
-                        Weapons.WeaponsOwned.Add(wep);
-                        
-                        //wep.ownedByPlayer = true;
+                        if (p.Gold >= wep.price)
+                        {
+                            wep.ownedByPlayer = true;
+                            Weapons.WeaponsOwned.Add(wep);
+
+                            //wep.ownedByPlayer = true;
+                        }
+                        else { Console.WriteLine($"Sorry, but you don't have enough for this piece. \nYou need {wep.price - p.Gold} more to walk off with this.s"); }
                     }
-                    else { }
                 }
             }
-            else if (test == "rifle")
+            else if (test == "r")
             {
                 //gives player rifle
             }
