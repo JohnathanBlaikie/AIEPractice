@@ -55,7 +55,7 @@ namespace CRPG
                         {
                             wep.ownedByPlayer = true;
                             Weapons.WeaponsOwned.Add(wep);
-
+                            p.Gold -= wep.price;
                             //wep.ownedByPlayer = true;
                         }
                         else { Console.WriteLine($"Sorry, but you don't have enough for this piece. \nYou need {wep.price - p.Gold} more to walk off with this.s"); }
