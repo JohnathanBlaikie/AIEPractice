@@ -104,9 +104,9 @@ namespace CRPG
                 Console.Clear();
                 Console.WriteLine("Rolling...");
                 Console.WriteLine($"Perception: {p.Per = StatRoll(0)}");
+                p.Gold = 100;
                 return p;
             }
-
             else
             {
                 Console.WriteLine("invalid command");

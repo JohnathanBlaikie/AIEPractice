@@ -80,6 +80,7 @@ namespace CRPG
                 
 
                 Console.WriteLine("Type [C] to check your stats, or [V] to view your last save");
+                Console.WriteLine("Press [S] to visit the shop.");
                 char tempchar = sC.RK(' ');
                 Console.Clear();
                 if (tempchar == 'v')
