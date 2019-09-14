@@ -43,7 +43,7 @@ namespace CRPG
                 Console.WriteLine($"Name: {w.name}\nDamage: {w.bDamage}\nRange: {w.maxRange}\nPrice: {w.price}\n");
             }
 
-            string test = sC.WRL($"Your Gold:{p.Gold}\nChoose a weapon to purchase.");
+            string test = sC.WRL($"Your Gold: {p.Gold}\nChoose a weapon to purchase.");
             if (test == "s")
             {
                 //gives player shotgun
@@ -55,7 +55,7 @@ namespace CRPG
                         {
                             wep.ownedByPlayer = true;
                             Weapons.WeaponsOwned.Add(wep);
-                            p.Gold -= wep.price;
+                            //p.Gold -= wep.price;
                             //wep.ownedByPlayer = true;
                         }
                         else { Console.WriteLine($"Sorry, but you don't have enough for this piece. \nYou need {wep.price - p.Gold} more to walk off with this.s"); }
