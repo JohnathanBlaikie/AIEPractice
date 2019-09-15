@@ -32,7 +32,7 @@ namespace CRPG
             }
             w.InventoryInstantiation();
 
-            sC.TB("CRPG NAME HERE");
+            sC.TB("Spurs at Dawn");
             Console.WriteLine("Press Enter to begin...");
             sC.RL("");
             while (loadNew)
