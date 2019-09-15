@@ -75,12 +75,32 @@ namespace CRPG
                 if (Location == 1)
                 {
                     l.TownSquare();
-                    p.Location = 1;
+                    char temp = sC.RK(' ');
+                    if (temp == 'l')
+                    {
+                        Console.Clear();
+                        p.Location = Location = 2;
+                    }
+                    else if (temp == 'r')
+                    {
+                        Console.Clear();
+                        p.Location = Location = 3;
+                    }
+                    else
+                    {
+                        p.Location = 1;
+                    }
                 }
-                
+                if(Location == 2)
+                {
+                    l.Saloon();
+                }
+                if(Location == 3)
+                {
+                    l.Shop();
+                }
 
                 Console.WriteLine("Type [C] to check your stats, or [V] to view your last save");
-                Console.WriteLine("Press [S] to visit the shop.");
                 char tempchar = sC.RK(' ');
                 Console.Clear();
                 if (tempchar == 'v')

@@ -12,7 +12,6 @@ namespace CRPG
         ShortCuts sC = new ShortCuts();
         Helpers h = new Helpers();
         Weapons w = new Weapons();
-        //int shotgunPurchase = 0;
         public void TownEntrance()
         {
             sC.TB($"As the sun sets over the horizon, the skeletal silhouette of a town \nprotrudes from the horizon. \nPress Any Key to Continue...");
@@ -45,12 +44,34 @@ namespace CRPG
         }
         public void TownSquare()
         {
-            sC.TB("You make your way to the center of town, on your left is an establishment\nnamed the Sasaparilla Saloon. On your right is a store ");
-            sC.TB("");
+            sC.TB("You make your way to the center of town, on your left is an establishment\nnamed the Sasaparilla Saloon. On your right is a store named \nMom and Pop's Firearm Shoppe.");
+            Console.WriteLine("Do you go [L]eft or [R]ight?");
         }
-        void Saloon()
+        public void Saloon()
         {
+            sC.TB("As you enter the bar you feel the piercing gaze of its inhabitants\nscanning every inch of your person.\n");
+            Console.Clear();
+            sC.TB($"Not to be deterred, you muster up your courage and prepare to make your entrance.\nPress [R] to roll for Constitution, or press enter to skip. \nCurrent Constitution: [{Program.p.Con}/15]");
+            char temp = sC.RK(' ');
+            if (temp == 'r')
+            {
+                if (h.R2H(0) + Program.p.Per >= 10)
+                {
+                    sC.TB("Check Success! \nYou stand up tall and puff out your chest, \npush open the batwing doors, and march up to the bar.");
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey();
+                }
+                else
+                {
+                    sC.TB("Check Failed.\nCaving to the social pressures, you tip your hat over your eyes \nand shuffle to one of the corner seats.");
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey();
+                }
+            }
+            else
+            {
 
+            }
         }
         public void Shop()
         {
@@ -82,8 +103,24 @@ namespace CRPG
             else if (test == "r")
             {
                 //gives player rifle
-                foreach(Weapons wep in Weapons.WeaponCheck)
-                if (wep.name == "Repeater Rifle")
+                foreach (Weapons wep in Weapons.WeaponCheck)
+                    if (wep.name == "Repeater Rifle")
+                    {
+                        if (Program.p.Gold >= wep.price)
+                        {
+                            wep.ownedByPlayer = true;
+                            Weapons.WeaponsOwned.Add(wep);
+                            Program.p.Gold -= wep.price;
+                            //wep.ownedByPlayer = true;
+                        }
+                        else { Console.WriteLine($"Sorry, but you don't have enough for this piece. \nYou need {wep.price - Program.p.Gold} more to walk off with this.s"); }
+                    }
+            }
+            else if (test == "p")
+            {
+                //gives player PKD
+                foreach (Weapons wep in Weapons.WeaponCheck)
+                if (wep.name == "PKD .223")
                 {
                     if (Program.p.Gold >= wep.price)
                     {
