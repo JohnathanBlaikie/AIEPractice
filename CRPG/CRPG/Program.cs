@@ -94,10 +94,12 @@ namespace CRPG
                 if(Location == 2)
                 {
                     l.Saloon();
+                    p.Location = Location = 1;
                 }
                 if(Location == 3)
                 {
                     l.Shop();
+                    p.Location = Location = 1;
                 }
 
                 Console.WriteLine("Type [C] to check your stats, or [V] to view your last save");

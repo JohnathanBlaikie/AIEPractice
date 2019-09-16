@@ -14,7 +14,7 @@ namespace CRPG
         Weapons w = new Weapons();
         public void TownEntrance()
         {
-            sC.TB($"As the sun sets over the horizon, the skeletal silhouette of a town \nprotrudes from the horizon. \nPress Any Key to Continue...");
+            sC.TB($"As the sun sets over the horizon, the skeletal silhouette of a town \nprotrudes from the skyline. \nPress Any Key to Continue...");
             Console.ReadKey();
             Console.Clear();
             sC.TB($"The shadows eminating from the town stretch across the desert until they envelop you in evening shade. \nScanning your surroundings you don't see any other town-shaped shadows, narrowing your options for lodging considerably.");
@@ -49,6 +49,7 @@ namespace CRPG
         }
         public void Saloon()
         {
+            bool checkpass = false;
             sC.TB("As you enter the bar you feel the piercing gaze of its inhabitants\nscanning every inch of your person.\n");
             Console.Clear();
             sC.TB($"Not to be deterred, you muster up your courage and prepare to make your entrance.\nPress [R] to roll for Constitution, or press enter to skip. \nCurrent Constitution: [{Program.p.Con}/15]");
@@ -57,6 +58,7 @@ namespace CRPG
             {
                 if (h.R2H(0) + Program.p.Per >= 10)
                 {
+                    checkpass = true;
                     sC.TB("Check Success! \nYou stand up tall and puff out your chest, \npush open the batwing doors, and march up to the bar.");
                     Console.WriteLine("Press any key to continue...");
                     Console.ReadKey();
@@ -70,12 +72,51 @@ namespace CRPG
             }
             else
             {
+                sC.TB("Caving to the social pressures, you tip your hat over your eyes \nand shuffle to one of the corner seats.");
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+            }
+            if (checkpass)
+            {
+                Console.Clear();
+                sC.TB("The man behind the counter locks eyes with you, and asks \"So, what'll it be?\"");
+                Console.WriteLine("[1] Nothing\n[2] Cactus Wine\nDexterity +1\nGold: 25\n[3] Mule Skinner\nStrength +1\nGold: 25\n[4] Milk\nConstitution +1\nGold: 10\nPress [L] to leave.");
+                char tmp = sC.RK(' ');
+                if (tmp == 2)
+                {
+                    Program.p.Dex++;
+                    Program.p.Gold -= 25;
+                }
+                else if (tmp == 3)
+                {
+                    Program.p.Str++;
+                    Program.p.Gold -= 25;
+                }
+                else if (tmp == 4)
+                {
+                    Program.p.Con++;
+                    Program.p.Gold -= 10;
 
+                }
+                else
+                {
+                    Console.Clear();
+                    sC.TB("You collect your belongings and leave.");
+                }
+
+            }
+            else if (!checkpass)
+            {
+                Console.Clear();
+                sC.TB("You sit in your seat of shame and get nothing.\nPress any key to leave.");
             }
         }
         public void Shop()
         {
             sC.TB($"\"Welcome to Mom & Pop's Firearm Shoppe!\"\nSays the bespectacled man behind the counter.");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+            Console.Clear(); 
             foreach(Weapons w in Weapons.WeaponCheck)
             {
                 Console.WriteLine($"Name: {w.name}\nDamage: {w.bDamage}\nRange: {w.maxRange}\nPrice: {w.price}\n");
@@ -120,18 +161,20 @@ namespace CRPG
             {
                 //gives player PKD
                 foreach (Weapons wep in Weapons.WeaponCheck)
-                if (wep.name == "PKD .223")
-                {
-                    if (Program.p.Gold >= wep.price)
+                    if (wep.name == "PKD .223")
                     {
-                        wep.ownedByPlayer = true;
-                        Weapons.WeaponsOwned.Add(wep);
-                        Program.p.Gold -= wep.price;
-                        //wep.ownedByPlayer = true;
+                        if (Program.p.Gold >= wep.price)
+                        {
+                            wep.ownedByPlayer = true;
+                            Weapons.WeaponsOwned.Add(wep);
+                            Program.p.Gold -= wep.price;
+                            //wep.ownedByPlayer = true;
+                        }
+                        else { Console.WriteLine($"Sorry, but you don't have enough for this piece. \nYou need {wep.price - Program.p.Gold} more to walk off with this.s"); }
                     }
-                    else { Console.WriteLine($"Sorry, but you don't have enough for this piece. \nYou need {wep.price - Program.p.Gold} more to walk off with this.s"); }
-                }
             }
+            else
+            { }
         }
         void Hideout()
         {
