@@ -178,7 +178,15 @@ namespace CRPG
         }
         void Hideout()
         {
-
+            Program.p.HP = Program.p.Con * 4;
+            int phase = 0;
+            if(phase == 0)
+            {
+                Array[] enemies = new Array[2];
+                sC.TB("You walk up to the hideout, three gang members are lingering outside and notice you. ");
+                sC.RK(' ');
+                Console.Clear();
+            }
         }
     }
 }

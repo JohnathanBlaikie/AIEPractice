@@ -14,7 +14,7 @@ namespace CRPG
         Weapons weapons = new Weapons();
 
         public string name;
-        public int Str, Dex, Int, Con, Per, Gold, Location;
+        public int Str, Dex, Int, Con, Per, Gold, Location, HP;
         private string nameP;
         private int StrP, DexP, IntP, ConP, PerP, GoldP, LocationP;
 
