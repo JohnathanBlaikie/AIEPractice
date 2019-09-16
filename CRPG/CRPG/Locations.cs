@@ -78,30 +78,35 @@ namespace CRPG
             }
             if (checkpass)
             {
-                Console.Clear();
-                sC.TB("The man behind the counter locks eyes with you, and asks \"So, what'll it be?\"");
-                Console.WriteLine("[1] Nothing\n[2] Cactus Wine\nDexterity +1\nGold: 25\n[3] Mule Skinner\nStrength +1\nGold: 25\n[4] Milk\nConstitution +1\nGold: 10\nPress [L] to leave.");
-                char tmp = sC.RK(' ');
-                if (tmp == 2)
-                {
-                    Program.p.Dex++;
-                    Program.p.Gold -= 25;
-                }
-                else if (tmp == 3)
-                {
-                    Program.p.Str++;
-                    Program.p.Gold -= 25;
-                }
-                else if (tmp == 4)
-                {
-                    Program.p.Con++;
-                    Program.p.Gold -= 10;
-
-                }
-                else
+                bool shopping = true;
+                while (shopping)
                 {
                     Console.Clear();
-                    sC.TB("You collect your belongings and leave.");
+                    sC.TB("The man behind the counter locks eyes with you, and asks \"So, what'll it be?\"");
+                    Console.WriteLine("[1] Nothing\n[2] Cactus Wine\nDexterity +1\nGold: 25\n[3] Mule Skinner\nStrength +1\nGold: 25\n[4] Milk\nConstitution +1\nGold: 10\nPress [L] to leave.");
+                    char tmp = sC.RK(' ');
+                    if (tmp == '2')
+                    {
+                        Program.p.Dex++;
+                        Program.p.Gold -= 25;
+                    }
+                    else if (tmp == '3')
+                    {
+                        Program.p.Str++;
+                        Program.p.Gold -= 25;
+                    }
+                    else if (tmp == '4')
+                    {
+                        Program.p.Con++;
+                        Program.p.Gold -= 10;
+
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        sC.TB("You collect your belongings and leave.");
+                        shopping = false;
+                    }
                 }
 
             }

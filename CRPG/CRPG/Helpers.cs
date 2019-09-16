@@ -19,7 +19,7 @@ namespace CRPG
         public int R2H(int d20)
         {
             d20 = r1.Next(1, 20);
-            Console.WriteLine(d20);
+            //Console.WriteLine(d20);
             return d20;
         }
         //R2D4 is just a generic random combination.
