@@ -86,6 +86,11 @@ namespace CRPG
                         Console.Clear();
                         p.Location = Location = 3;
                     }
+                    else if (temp == 'h')
+                    {
+                        Console.Clear();
+                        p.Location = Location = 4;
+                    }
                     else
                     {
                         p.Location = 1;
@@ -99,6 +104,11 @@ namespace CRPG
                 if(Location == 3)
                 {
                     l.Shop();
+                    p.Location = Location = 1;
+                }
+                if(Location == 4)
+                {
+                    l.Hideout();
                     p.Location = Location = 1;
                 }
 
@@ -151,24 +161,11 @@ namespace CRPG
                 {
                     p.CheckStats();
                 }
-                else if (tempchar == 'r')
-                {
-                    p.RandomStats();
-                }
-                else if (tempchar == 's')
-                {
-                    l.Shop();
-                }
                 else if (tempchar == 'q')
                 {
                     close = true;
                 }
-                else if (tempchar == 'w')
-                {
-                    w.ArsenalListing();
-                    Console.WriteLine("Press Enter to Continue");
-                    sC.RL("");
-                }
+
                 else
                 {
                     Console.WriteLine("Invalid Command");

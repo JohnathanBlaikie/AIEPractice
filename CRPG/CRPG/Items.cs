@@ -22,7 +22,7 @@ namespace CRPG
         public static List<Weapons> WeaponsOwned = new List<Weapons>();
         public static List<Weapons> PreviousSave = new List<Weapons>();
         public string name;
-        public int price, bDamage, StrMod, DexMod, truDamage, maxRange, ammoPerShot, ammoInMag;
+        public int price, bDamage, StrMod, DexMod, truDamage, maxRange, ammoPerShot, ammoInMag, cRam;
         public bool ownedByPlayer;
         public void ArsenalListing()
         {

@@ -45,7 +45,7 @@ namespace CRPG
         {
             int.TryParse(x, out y);
         }
-        //int.TryParse but with POLYMORPHISM!
+        //int.TryParse but 2 at a time.
         public void ITP(string a, ref int b, string x, ref int y)
         {
             int.TryParse(a, out b);

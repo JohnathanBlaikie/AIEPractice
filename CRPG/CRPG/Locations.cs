@@ -12,6 +12,7 @@ namespace CRPG
         ShortCuts sC = new ShortCuts();
         Helpers h = new Helpers();
         Weapons w = new Weapons();
+        Enemies e = new Enemies();
         public void TownEntrance()
         {
             sC.TB($"As the sun sets over the horizon, the skeletal silhouette of a town \nprotrudes from the skyline. \nPress Any Key to Continue...");
@@ -45,7 +46,7 @@ namespace CRPG
         public void TownSquare()
         {
             sC.TB("You make your way to the center of town, on your left is an establishment\nnamed the Sasaparilla Saloon. On your right is a store named \nMom and Pop's Firearm Shoppe.");
-            Console.WriteLine("Do you go [L]eft or [R]ight?");
+            Console.WriteLine("Do you go [L]eft or [R]ight?\n Press [C] to view your character.");
         }
         public void Saloon()
         {
@@ -85,27 +86,30 @@ namespace CRPG
                     sC.TB("The man behind the counter locks eyes with you, and asks \"So, what'll it be?\"");
                     Console.WriteLine("[1] Nothing\n[2] Cactus Wine\nDexterity +1\nGold: 25\n[3] Mule Skinner\nStrength +1\nGold: 25\n[4] Milk\nConstitution +1\nGold: 10\nPress [L] to leave.");
                     char tmp = sC.RK(' ');
-                    if (tmp == '2')
-                    {
-                        Program.p.Dex++;
-                        Program.p.Gold -= 25;
-                    }
-                    else if (tmp == '3')
-                    {
-                        Program.p.Str++;
-                        Program.p.Gold -= 25;
-                    }
-                    else if (tmp == '4')
-                    {
-                        Program.p.Con++;
-                        Program.p.Gold -= 10;
-
-                    }
-                    else
+                    if (tmp == '1')
                     {
                         Console.Clear();
                         sC.TB("You collect your belongings and leave.");
                         shopping = false;
+                    }
+                    if (tmp == '2' && Program.p.Gold >= 25)
+                    {
+                        Program.p.Dex++;
+                        Program.p.Gold -= 25;
+                    }
+                    else if (tmp == '3' && Program.p.Gold >= 25)
+                    {
+                        Program.p.Str++;
+                        Program.p.Gold -= 25;
+                    }
+                    else if (tmp == '4' && Program.p.Gold >= 10)
+                    {
+                        Program.p.Con++;
+                        Program.p.Gold -= 10;
+                    }
+                    else
+                    {
+                        Console.WriteLine("You don't have enough gold for that drink.");
                     }
                 }
 
@@ -121,8 +125,8 @@ namespace CRPG
             sC.TB($"\"Welcome to Mom & Pop's Firearm Shoppe!\"\nSays the bespectacled man behind the counter.");
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
-            Console.Clear(); 
-            foreach(Weapons w in Weapons.WeaponCheck)
+            Console.Clear();
+            foreach (Weapons w in Weapons.WeaponCheck)
             {
                 Console.WriteLine($"Name: {w.name}\nDamage: {w.bDamage}\nRange: {w.maxRange}\nPrice: {w.price}\n");
             }
@@ -181,16 +185,247 @@ namespace CRPG
             else
             { }
         }
-        void Hideout()
+        public void Hideout()
         {
             Program.p.HP = Program.p.Con * 4;
             int phase = 0;
-            if(phase == 0)
+            int eIDint = 0;
+            int rep = 1;
+            int wepInt = 0;
+            bool inCombat = false;
+            bool playerDeath = false;
+            foreach (Weapons wep in Weapons.WeaponsOwned)
             {
-                Array[] enemies = new Array[2];
-                sC.TB("You walk up to the hideout, three gang members are lingering outside and notice you. ");
+                wep.cRam = rep;
+                rep++;
+            }
+            if (!playerDeath)
+            {
+                if (phase == 0)
+                {
+                    sC.TB("You walk up to the hideout, three gang members are lingering outside and notice you. ");
+                    sC.RK(' ');
+                    Console.Clear();
+                    eIDint = 0;
+
+                    var ph0 = new List<Enemies>
+                    {
+                        new Thug(1),
+                        new Thug(2),
+                        new Thug(3)
+                    };
+                    inCombat = true;
+                    while (inCombat)
+                    {
+                        if (Program.p.HP <= 0)
+                        {
+                            playerDeath = true;
+                            inCombat = false;
+                        }
+                        Console.WriteLine("");
+                        Console.Write("Name: ");
+                        foreach (Enemies e in ph0)
+                        {
+                            Console.Write($"\t[{e.EID}] {e.Name}");
+                        }
+                        Console.Write("\nHealth: ");
+                        foreach (Enemies e in ph0)
+                        {
+                            if (e.EHP > 0)
+                                Console.Write($"{e.EHP}\t\t");
+                            else
+                                Console.Write("Dead\t\t");
+
+                        }
+
+
+                        Console.WriteLine();
+                        Console.WriteLine($"Choose an enemy to attack\nCurrent Health: {Program.p.HP}");
+                        sC.ITP(Console.ReadKey(true).KeyChar.ToString(), ref eIDint);
+                        foreach (Enemies e in ph0)
+                        {
+                            if (eIDint == e.EID)
+                            {
+                                Console.WriteLine($"Choose a weapons to use");
+                                foreach (Weapons wep in Weapons.WeaponsOwned)
+                                {
+                                    Console.Write($"[{wep.cRam}] {wep.name}\t");
+                                }
+                                Console.WriteLine("");
+                                foreach (Weapons wep in Weapons.WeaponsOwned)
+                                {
+                                    Console.Write($"Damage: {wep.truDamage = wep.bDamage + (Program.p.Dex * wep.DexMod) + (Program.p.Str * wep.StrMod)}\t\t");
+                                }
+                                sC.ITP(Console.ReadKey(true).KeyChar.ToString(), ref wepInt);
+                                foreach (Weapons wep in Weapons.WeaponsOwned)
+                                {
+                                    if (wepInt == wep.cRam)
+                                    {
+                                        e.EHP -= wep.truDamage;
+                                    }
+                                }
+                            }
+                        }
+                        Console.WriteLine();
+                        int deadT = 0;
+                        foreach (Enemies eCheck in ph0)
+                        {
+                            if (eCheck.EHP <= 0)
+                                eCheck.IsAlive = false;
+
+                            if (eCheck.IsAlive)
+                            {
+                                int tInt = h.R2H(0) + 7;
+                                if (tInt >= Program.p.Per + Program.p.Dex)
+                                {
+                                    Console.WriteLine($"{eCheck.DPT} Damage Taken from thug [{eCheck.EID}]");
+                                    Program.p.HP -= eCheck.DPT;
+                                }
+                                else
+                                {
+                                    Console.WriteLine($"Thug [{eCheck.EID}] missed!");
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Thug [{eCheck.EID}] is dead.");
+                                deadT++;
+                            }
+                            if (deadT >= 3)
+                            {
+                                sC.TB($"You collected {eCheck.Bounty * 3} Gold from their bounties");
+                                Program.p.Gold += eCheck.Bounty * 3;
+                                inCombat = false;
+                                phase = 1;
+                            }
+                        }
+                    }
+                }
+
+                if (phase == 1)
+                {
+                    sC.TB("As you push in through the entrance, you run into a captain and his guards investigating the commotion.\nPress [R] to retreat or [Enter] continue");
+                    char tempchar = sC.RK(' ');
+                    if (tempchar == 'r')
+                    {
+                        phase = 3;
+                        Program.p.Location = 1;
+                        inCombat = false;
+                    }
+
+                    var ph1 = new List<Enemies>
+                    {
+                    new Thug(1),
+                    new Thug(2),
+                    new Captain(3)
+                    };
+                    Console.Clear();
+                    eIDint = 0;
+                    inCombat = true;
+                    while (inCombat)
+                    {
+
+                        if (Program.p.HP <= 0)
+                        {
+                            playerDeath = true;
+                            inCombat = false;
+                        }
+                        Console.WriteLine("");
+                        Console.Write("Name: ");
+                        foreach (Enemies e in ph1)
+                        {
+                            Console.Write($"\t[{e.EID}] {e.Name}");
+                        }
+                        Console.Write("\nHealth: ");
+                        foreach (Enemies e in ph1)
+                        {
+                            if (e.EHP > 0)
+                                Console.Write($"{e.EHP}\t\t");
+                            else
+                                Console.Write("Dead\t\t");
+
+                        }
+
+                        Console.WriteLine();
+                        Console.WriteLine($"Choose an enemy to attack\nCurrent Health: {Program.p.HP}");
+                        sC.ITP(Console.ReadKey(true).KeyChar.ToString(), ref eIDint);
+                        foreach (Enemies e in ph1)
+                        {
+                            if (eIDint == e.EID)
+                            {
+                                Console.WriteLine($"Choose a weapons to use");
+                                foreach (Weapons wep in Weapons.WeaponsOwned)
+                                {
+                                    Console.Write($"[{wep.cRam}] {wep.name}\t");
+                                }
+                                Console.WriteLine("");
+                                foreach (Weapons wep in Weapons.WeaponsOwned)
+                                {
+                                    Console.Write($"{wep.truDamage = wep.bDamage + (Program.p.Dex * wep.DexMod) + (Program.p.Str * wep.StrMod)}\t\t");
+                                }
+                                sC.ITP(Console.ReadKey(true).KeyChar.ToString(), ref wepInt);
+                                foreach (Weapons wep in Weapons.WeaponsOwned)
+                                {
+                                    if (wepInt == wep.cRam)
+                                    {
+                                        e.EHP -= wep.truDamage;
+                                    }
+                                }
+                            }
+                        }
+                        Console.WriteLine();
+                        int deadT = 0;
+                        foreach (Enemies eCheck in ph1)
+                        {
+                            if (eCheck.EHP <= 0)
+                                eCheck.IsAlive = false;
+
+                            if (eCheck.IsAlive)
+                            {
+                                int tInt = h.R2H(0) + 7;
+                                if (tInt >= Program.p.Per + Program.p.Dex)
+                                {
+                                    Console.WriteLine($"{eCheck.DPT} Damage Taken from {eCheck.Name} [{eCheck.EID}]");
+                                    Program.p.HP -= eCheck.DPT;
+                                }
+                                else
+                                {
+                                    Console.WriteLine($"{eCheck.Name} [{eCheck.EID}] missed!");
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine($"{eCheck.Name} [{eCheck.EID}] is dead.");
+                                deadT++;
+                            }
+                            if (deadT >= 3)
+                            {
+                                int tInt = 0;
+                                foreach (Enemies eDeath in ph1)
+                                {
+                                    tInt += eDeath.Bounty;
+                                }
+                                sC.TB($"You collected {eCheck.Bounty * 3} Gold from their bounties");
+                                Program.p.Gold += tInt;
+                                inCombat = false;
+                                phase = 2;
+                            }
+                        }
+
+                    }
+                }
+                if(phase == 3)
+                {
+
+                }
+                
+                
+            }
+            if (playerDeath)//something is preventing the player from leaving at the the beginning of phase 1 (2) figure it out.
+            {
+                sC.TB("You have died.");
+                playerDeath = true;
                 sC.RK(' ');
-                Console.Clear();
             }
         }
     }

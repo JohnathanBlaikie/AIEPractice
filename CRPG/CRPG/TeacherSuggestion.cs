@@ -268,3 +268,16 @@
 
 //}
 //}
+
+//string[] LinesToPrint = new string[2];
+
+//foreach (Enemies e in ph0)
+//{
+//    LinesToPrint[0] += $"\t{e.Name}";
+//    LinesToPrint[1] += $"\t{e.EHP}";
+//}
+
+//foreach (string ln in LinesToPrint)
+//{
+//    Console.WriteLine(ln);
+//}
