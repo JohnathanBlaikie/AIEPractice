@@ -45,8 +45,8 @@ namespace CRPG
         }
         public void TownSquare()
         {
-            sC.TB("You make your way to the center of town, on your left is an establishment\nnamed the Sasaparilla Saloon. On your right is a store named \nMom and Pop's Firearm Shoppe.");
-            Console.WriteLine("Do you go [L]eft or [R]ight?\n Press [C] to view your character.");
+            sC.TB("You make your way to the center of town, on your left is an establishment\nnamed the Sasaparilla Saloon. On your right is a store named \nMom and Pop's Firearm Shoppe. In front of you\nis the Texas Red bandit hideout.");
+            Console.WriteLine("Do you go [L]eft, [R]ight, or [F]orwards?\n Press [C] to view your character.");
         }
         public void Saloon()
         {
@@ -126,13 +126,18 @@ namespace CRPG
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
             Console.Clear();
+            int temp = 1;
             foreach (Weapons w in Weapons.WeaponCheck)
             {
-                Console.WriteLine($"Name: {w.name}\nDamage: {w.bDamage}\nRange: {w.maxRange}\nPrice: {w.price}\n");
+                if (w.ownedByPlayer == false)
+                {
+                    Console.WriteLine($"[{temp}]: {w.name}\nDamage: {w.bDamage}\nRange: {w.maxRange}\nPrice: {w.price}\n");
+                    temp++;
+                }
             }
 
             string test = sC.WRL($"Your Gold: {Program.p.Gold}\nChoose a weapon to purchase.");
-            if (test == "s")
+            if (test == "1")
             {
                 //gives player shotgun
                 foreach (Weapons wep in Weapons.WeaponCheck)
@@ -150,7 +155,7 @@ namespace CRPG
                     }
                 }
             }
-            else if (test == "r")
+            else if (test == "2")
             {
                 //gives player rifle
                 foreach (Weapons wep in Weapons.WeaponCheck)
@@ -166,7 +171,7 @@ namespace CRPG
                         else { Console.WriteLine($"Sorry, but you don't have enough for this piece. \nYou need {wep.price - Program.p.Gold} more to walk off with this.s"); }
                     }
             }
-            else if (test == "p")
+            else if (test == "3")
             {
                 //gives player PKD
                 foreach (Weapons wep in Weapons.WeaponCheck)
@@ -217,11 +222,6 @@ namespace CRPG
                     inCombat = true;
                     while (inCombat)
                     {
-                        if (Program.p.HP <= 0)
-                        {
-                            playerDeath = true;
-                            inCombat = false;
-                        }
                         Console.WriteLine("");
                         Console.Write("Name: ");
                         foreach (Enemies e in ph0)
@@ -299,19 +299,28 @@ namespace CRPG
                                 phase = 1;
                             }
                         }
+                        if (Program.p.HP <= 0)
+                        {
+                            playerDeath = true;
+                            inCombat = false;
+                        }
                     }
                 }
 
+            }
+            if (!playerDeath)
+            {
+                sC.TB("As you push in through the entrance, you run into a captain and his guards investigating the commotion.\nPress [R] to retreat or [Enter] continue");
+                char tempchar = sC.RK(' ');
+                if (tempchar == 'r')
+                {
+                    phase = 3;
+                    Program.p.Location = 1;
+                    inCombat = false;
+                }
                 if (phase == 1)
                 {
-                    sC.TB("As you push in through the entrance, you run into a captain and his guards investigating the commotion.\nPress [R] to retreat or [Enter] continue");
-                    char tempchar = sC.RK(' ');
-                    if (tempchar == 'r')
-                    {
-                        phase = 3;
-                        Program.p.Location = 1;
-                        inCombat = false;
-                    }
+
 
                     var ph1 = new List<Enemies>
                     {
@@ -405,7 +414,7 @@ namespace CRPG
                                 {
                                     tInt += eDeath.Bounty;
                                 }
-                                sC.TB($"You collected {eCheck.Bounty * 3} Gold from their bounties");
+                                sC.TB($"You collected {tInt} Gold from their bounties");
                                 Program.p.Gold += tInt;
                                 inCombat = false;
                                 phase = 2;
@@ -414,13 +423,126 @@ namespace CRPG
 
                     }
                 }
-                if(phase == 3)
+            }
+            if (!playerDeath)
+            {
+                sC.TB("As you move up the stairs, a honcho and his goons ambush you.\nPress [R] to retreat or [Enter] continue");
+                char tempchar = sC.RK(' ');
+                if (tempchar == 'r')
+                {
+                    phase = 3;
+                    Program.p.Location = 1;
+                    inCombat = false;
+                }
+                if (phase == 2)
                 {
 
+                    var ph2 = new List<Enemies>
+                    {
+                    new Thug(1),
+                    new Honcho(2),
+                    new Thug(3)
+                    };
+                    Console.Clear();
+                    eIDint = 0;
+                    inCombat = true;
+                    while (inCombat)
+                    {
+                        Console.WriteLine("");
+                        Console.Write("Name: ");
+                        foreach (Enemies e in ph2)
+                        {
+                            Console.Write($"\t[{e.EID}] {e.Name}");
+                        }
+                        Console.Write("\nHealth: ");
+                        foreach (Enemies e in ph2)
+                        {
+                            if (e.EHP > 0)
+                                Console.Write($"{e.EHP}\t\t");
+                            else
+                                Console.Write("Dead\t\t");
+
+                        }
+
+                        Console.WriteLine();
+                        Console.WriteLine($"Choose an enemy to attack\nCurrent Health: {Program.p.HP}");
+                        sC.ITP(Console.ReadKey(true).KeyChar.ToString(), ref eIDint);
+                        foreach (Enemies e in ph2)
+                        {
+                            if (eIDint == e.EID)
+                            {
+                                Console.WriteLine($"Choose a weapons to use");
+                                foreach (Weapons wep in Weapons.WeaponsOwned)
+                                {
+                                    Console.Write($"[{wep.cRam}] {wep.name}\t");
+                                }
+                                Console.WriteLine("");
+                                foreach (Weapons wep in Weapons.WeaponsOwned)
+                                {
+                                    Console.Write($"{wep.truDamage = wep.bDamage + (Program.p.Dex * wep.DexMod) + (Program.p.Str * wep.StrMod)}\t\t");
+                                }
+                                sC.ITP(Console.ReadKey(true).KeyChar.ToString(), ref wepInt);
+                                foreach (Weapons wep in Weapons.WeaponsOwned)
+                                {
+                                    if (wepInt == wep.cRam)
+                                    {
+                                        e.EHP -= wep.truDamage;
+                                    }
+                                }
+                            }
+                        }
+                        Console.WriteLine();
+                        int deadT = 0;
+                        foreach (Enemies eCheck in ph2)
+                        {
+                            if (eCheck.EHP <= 0)
+                                eCheck.IsAlive = false;
+
+                            if (eCheck.IsAlive)
+                            {
+                                int tInt = h.R2H(0) + 7;
+                                if (tInt >= Program.p.Per + Program.p.Dex)
+                                {
+                                    Console.WriteLine($"{eCheck.DPT} Damage Taken from {eCheck.Name} [{eCheck.EID}]");
+                                    Program.p.HP -= eCheck.DPT;
+                                }
+                                else
+                                {
+                                    Console.WriteLine($"{eCheck.Name} [{eCheck.EID}] missed!");
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine($"{eCheck.Name} [{eCheck.EID}] is dead.");
+                                deadT++;
+                            }
+                            if (deadT >= 3)
+                            {
+                                int tInt = 0;
+                                foreach (Enemies eDeath in ph2)
+                                {
+                                    tInt += eDeath.Bounty;
+                                }
+                                sC.TB($"You collected {tInt} Gold from their bounties");
+                                Program.p.Gold += tInt;
+                                inCombat = false;
+                                phase = 2;
+                            }
+                        }
+                        if (Program.p.HP <= 0)
+                        {
+                            playerDeath = true;
+                            inCombat = false;
+                        }
+                    }
                 }
-                
-                
             }
+            if (phase == 3)
+            {
+
+            }
+
+
             if (playerDeath)//something is preventing the player from leaving at the the beginning of phase 1 (2) figure it out.
             {
                 sC.TB("You have died.");

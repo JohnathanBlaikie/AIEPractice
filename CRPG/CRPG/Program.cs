@@ -86,7 +86,7 @@ namespace CRPG
                         Console.Clear();
                         p.Location = Location = 3;
                     }
-                    else if (temp == 'h')
+                    else if (temp == 'f')
                     {
                         Console.Clear();
                         p.Location = Location = 4;
