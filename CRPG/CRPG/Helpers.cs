@@ -45,21 +45,10 @@ namespace CRPG
             return dSum;
         }
 
+        //Creates a new character and gives them the default weapon (Six-Shooter)
         public Player NewCharacter()
         {
             string temp, temp2, temp3, temp4, temp5;
-
-            //foreach (Weapons w in Weapons.WeaponCheck)
-            //{
-            //    if (w.ownedByPlayer == true)
-            //    {
-            //        Weapons.WeaponsOwned.Add(w);
-            //    }
-            //    else
-            //    {
-            //        Weapons.WeaponsOwned.Remove(w);
-            //    }
-            //}
             Weapons.WeaponsOwned.Clear();
             foreach(Weapons w in Weapons.WeaponCheck)
             {

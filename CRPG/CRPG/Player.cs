@@ -14,12 +14,12 @@ namespace CRPG
         Weapons weapons = new Weapons();
 
         public string name;
+        public bool isDead;
         public int Str, Dex, Int, Con, Per, Gold, Location, HP;
         private string nameP;
         private int StrP, DexP, IntP, ConP, PerP, GoldP, LocationP;
-
-        //This is what allows the user to create a new character.
-       
+        
+        //Reads the test.txt file and the PlayerInv.csv and applies their data to the current player.
         public void LoadSave()
         {
             Console.Clear();
@@ -31,7 +31,6 @@ namespace CRPG
             sC.ITP(sC.FRL(5),ref Per);
             sC.ITP(sC.FRL(6),ref Gold);
             sC.ITP(sC.FRL(7), ref Location);
-            //Weapons.WeaponsOwned = Weapons.PreviousSave;
             Console.WriteLine($" Name: {name}\n Strength: {Str}\n Dexterity: {Dex}" +
                 $"\n Intelligence: {Int}\n Constitution: {Con}\n Perception: {Per}\n Gold: {Gold}");
             using (StreamReader sR = new StreamReader("PlayerInv.csv"))
@@ -55,15 +54,13 @@ namespace CRPG
                 }
                 sR.Close();
             }
-            
-            //Weapons.WeaponsOwned.Clear();
-            //weapons.InventoryInstantiation();
             foreach (Weapons w in Weapons.WeaponsOwned)
             {
                 Console.WriteLine($" {w.name}");  
             }
         }
-        public void CheckSave()//Looks at the previous save and displays its information
+        //Looks at the previous save and displays its information
+        public void CheckSave()
         {
             nameP = sC.FRL(0);
             sC.ITP(sC.FRL(1), ref StrP);
@@ -81,7 +78,8 @@ namespace CRPG
                 Console.WriteLine($" {w.name}");
             }
         }
-        public void CheckStats()//Looks at the current information of the player that has yet to be saved
+        //Looks at the current information of the player that has yet to be saved.
+        public void CheckStats()
         {
             Console.WriteLine($" Name: {name}\n Strength: {Str}\n Dexterity: {Dex}\n Intelligence: {Int}\n Constitution: {Con}\n Perception: {Per}\n Gold: {Gold}");
 
@@ -90,6 +88,7 @@ namespace CRPG
                 Console.WriteLine($" {w.name}");
             }
         }
+        //Random Stats is a remnant of how I origionally did the stat rolls, it serves no *real* purpose now.
         public void RandomStats()
         {
             Str = r.Next(2, 20);
@@ -98,7 +97,8 @@ namespace CRPG
             Int = r.Next(2, 20);
             Per = r.Next(2, 20);
         }
-        public void SaveStats()//saves the player's current information.
+        //Saves the player's current information.
+        public void SaveStats()
         {
             StreamWriter writer = new StreamWriter("test.txt");
             writer.WriteLine(name);

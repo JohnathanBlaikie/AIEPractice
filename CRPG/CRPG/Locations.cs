@@ -13,6 +13,8 @@ namespace CRPG
         Helpers h = new Helpers();
         Weapons w = new Weapons();
         Enemies e = new Enemies();
+
+        //this is the opening prologue. Here, the player can attempt a perception check to see the town sign.
         public void TownEntrance()
         {
             sC.TB($"As the sun sets over the horizon, the skeletal silhouette of a town \nprotrudes from the skyline. \nPress Any Key to Continue...");
@@ -43,11 +45,16 @@ namespace CRPG
             }
             Console.Clear();
         }
+
+        //Writes out the current location and options for future travel.
         public void TownSquare()
         {
             sC.TB("You make your way to the center of town, on your left is an establishment\nnamed the Sasaparilla Saloon. On your right is a store named \nMom and Pop's Firearm Shoppe. In front of you\nis the Texas Red bandit hideout.");
             Console.WriteLine("Do you go [L]eft, [R]ight, or [F]orwards?\n Press [C] to view your character.");
         }
+
+        //Presents the player with a constitution check. Upon failure or skip, the player is forced 
+        //the corner of shame; if they succeed, they get to sit at the bar and order drinks that increase their stats.
         public void Saloon()
         {
             bool checkpass = false;
@@ -57,7 +64,7 @@ namespace CRPG
             char temp = sC.RK(' ');
             if (temp == 'r')
             {
-                if (h.R2H(0) + Program.p.Per >= 10)
+                if (h.R2H(0) + Program.p.Con >= 15)
                 {
                     checkpass = true;
                     sC.TB("Check Success! \nYou stand up tall and puff out your chest, \npush open the batwing doors, and march up to the bar.");
@@ -84,7 +91,8 @@ namespace CRPG
                 {
                     Console.Clear();
                     sC.TB("The man behind the counter locks eyes with you, and asks \"So, what'll it be?\"");
-                    Console.WriteLine("[1] Nothing\n[2] Cactus Wine\nDexterity +1\nGold: 25\n[3] Mule Skinner\nStrength +1\nGold: 25\n[4] Milk\nConstitution +1\nGold: 10\nPress [L] to leave.");
+                    Console.WriteLine("[1] Nothing (Leave)\n[2] Cactus Wine\nDexterity +1\nGold: 25\n[3] Mule Skinner\nStrength +1\nGold: 25\n[4] Milk\nConstitution +1\nGold: 10");
+                    Console.WriteLine($"\nYour Gold: {Program.p.Gold}");
                     char tmp = sC.RK(' ');
                     if (tmp == '1')
                     {
@@ -107,10 +115,6 @@ namespace CRPG
                         Program.p.Con++;
                         Program.p.Gold -= 10;
                     }
-                    else
-                    {
-                        Console.WriteLine("You don't have enough gold for that drink.");
-                    }
                 }
 
             }
@@ -120,6 +124,8 @@ namespace CRPG
                 sC.TB("You sit in your seat of shame and get nothing.\nPress any key to leave.");
             }
         }
+
+        //This allows the player to purchase the weapons listed in WeaponStats.csv.
         public void Shop()
         {
             sC.TB($"\"Welcome to Mom & Pop's Firearm Shoppe!\"\nSays the bespectacled man behind the counter.");
@@ -135,9 +141,24 @@ namespace CRPG
                     temp++;
                 }
             }
-
             string test = sC.WRL($"Your Gold: {Program.p.Gold}\nChoose a weapon to purchase.");
             if (test == "1")
+            {
+                //gives player rifle
+                foreach (Weapons wep in Weapons.WeaponCheck)
+                    if (wep.name == "Repeater Rifle")
+                    {
+                        if (Program.p.Gold >= wep.price)
+                        {
+                            wep.ownedByPlayer = true;
+                            Weapons.WeaponsOwned.Add(wep);
+                            Program.p.Gold -= wep.price;
+                            //wep.ownedByPlayer = true;
+                        }
+                        else { Console.WriteLine($"Sorry, but you don't have enough for this piece. \nYou need {wep.price - Program.p.Gold} more to walk off with this."); }
+                    }
+            }
+            else if (test == "2")
             {
                 //gives player shotgun
                 foreach (Weapons wep in Weapons.WeaponCheck)
@@ -151,25 +172,9 @@ namespace CRPG
                             Program.p.Gold -= wep.price;
                             //wep.ownedByPlayer = true;
                         }
-                        else { Console.WriteLine($"Sorry, but you don't have enough for this piece. \nYou need {wep.price - Program.p.Gold} more to walk off with this.s"); }
+                        else { Console.WriteLine($"Sorry, but you don't have enough for this piece. \nYou need {wep.price - Program.p.Gold} more to walk off with this."); }
                     }
                 }
-            }
-            else if (test == "2")
-            {
-                //gives player rifle
-                foreach (Weapons wep in Weapons.WeaponCheck)
-                    if (wep.name == "Repeater Rifle")
-                    {
-                        if (Program.p.Gold >= wep.price)
-                        {
-                            wep.ownedByPlayer = true;
-                            Weapons.WeaponsOwned.Add(wep);
-                            Program.p.Gold -= wep.price;
-                            //wep.ownedByPlayer = true;
-                        }
-                        else { Console.WriteLine($"Sorry, but you don't have enough for this piece. \nYou need {wep.price - Program.p.Gold} more to walk off with this.s"); }
-                    }
             }
             else if (test == "3")
             {
@@ -184,12 +189,15 @@ namespace CRPG
                             Program.p.Gold -= wep.price;
                             //wep.ownedByPlayer = true;
                         }
-                        else { Console.WriteLine($"Sorry, but you don't have enough for this piece. \nYou need {wep.price - Program.p.Gold} more to walk off with this.s"); }
+                        else { Console.WriteLine($"Sorry, but you don't have enough for this piece. \nYou need {wep.price - Program.p.Gold} more to walk off with this."); }
                     }
             }
             else
             { }
         }
+
+        //This is where the actual *Game* takes place, after killing each set of bandits, the player is given gold 
+        //equal to their combined bounties.
         public void Hideout()
         {
             Program.p.HP = Program.p.Con * 4;
@@ -199,12 +207,13 @@ namespace CRPG
             int wepInt = 0;
             bool inCombat = false;
             bool playerDeath = false;
+            bool playerRetreat = false;
             foreach (Weapons wep in Weapons.WeaponsOwned)
             {
                 wep.cRam = rep;
                 rep++;
             }
-            if (!playerDeath)
+            if (!playerDeath && !playerRetreat)
             {
                 if (phase == 0)
                 {
@@ -213,6 +222,7 @@ namespace CRPG
                     Console.Clear();
                     eIDint = 0;
 
+                    //ph0 = Phase 0, spawns 3 of the weakest for the player to fight.
                     var ph0 = new List<Enemies>
                     {
                         new Thug(1),
@@ -308,20 +318,23 @@ namespace CRPG
                 }
 
             }
-            if (!playerDeath)
+            if (!playerDeath && !playerRetreat)
             {
+                //The player is given the opportunity to retreat here, if they 
+                //press R they get sent back to town and their health gets reset to full.
                 sC.TB("As you push in through the entrance, you run into a captain and his guards investigating the commotion.\nPress [R] to retreat or [Enter] continue");
                 char tempchar = sC.RK(' ');
                 if (tempchar == 'r')
                 {
                     phase = 3;
                     Program.p.Location = 1;
+                    playerRetreat = true;
                     inCombat = false;
                 }
                 if (phase == 1)
                 {
 
-
+                    //Phase 1 spawns another set of enemies, this time with a captain among them.
                     var ph1 = new List<Enemies>
                     {
                     new Thug(1),
@@ -355,7 +368,7 @@ namespace CRPG
 
                         }
 
-                        Console.WriteLine();
+                        Console.WriteLine("\n\n");
                         Console.WriteLine($"Choose an enemy to attack\nCurrent Health: {Program.p.HP}");
                         sC.ITP(Console.ReadKey(true).KeyChar.ToString(), ref eIDint);
                         foreach (Enemies e in ph1)
@@ -424,7 +437,7 @@ namespace CRPG
                     }
                 }
             }
-            if (!playerDeath)
+            if (!playerDeath && !playerRetreat)
             {
                 sC.TB("As you move up the stairs, a honcho and his goons ambush you.\nPress [R] to retreat or [Enter] continue");
                 char tempchar = sC.RK(' ');
@@ -432,6 +445,7 @@ namespace CRPG
                 {
                     phase = 3;
                     Program.p.Location = 1;
+                    playerRetreat = true;
                     inCombat = false;
                 }
                 if (phase == 2)
@@ -526,7 +540,7 @@ namespace CRPG
                                 sC.TB($"You collected {tInt} Gold from their bounties");
                                 Program.p.Gold += tInt;
                                 inCombat = false;
-                                phase = 2;
+                                
                             }
                         }
                         if (Program.p.HP <= 0)
@@ -542,11 +556,16 @@ namespace CRPG
 
             }
 
-
-            if (playerDeath)//something is preventing the player from leaving at the the beginning of phase 1 (2) figure it out.
+            //if the player were to die, then they would be sent here.
+            if (playerDeath)
             {
-                sC.TB("You have died.");
-                playerDeath = true;
+                sC.TB("You have died. \n[L]oad a previous save or [Q]uit;");
+                Program.p.isDead = true;
+            }
+            else if (!playerDeath && !playerRetreat)
+            {
+                sC.RL("Although you cleared out the bandits' hideout this time, \nyou know more will take their place soon.");
+                Console.WriteLine("Press Any Key to Continue...");
                 sC.RK(' ');
             }
         }

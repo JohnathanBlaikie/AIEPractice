@@ -56,9 +56,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="PlayerInv.csv" />
-    <None Include="WeaponStats1.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="WeaponStats1.csv" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

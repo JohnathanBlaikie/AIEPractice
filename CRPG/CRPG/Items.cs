@@ -16,14 +16,14 @@ namespace CRPG
     }
     class Weapons
     {
-        //Player p = new Player();
-        //public int itemID;
         public static List<Weapons> WeaponCheck = new List<Weapons>();
         public static List<Weapons> WeaponsOwned = new List<Weapons>();
         public static List<Weapons> PreviousSave = new List<Weapons>();
         public string name;
         public int price, bDamage, StrMod, DexMod, truDamage, maxRange, ammoPerShot, ammoInMag, cRam;
         public bool ownedByPlayer;
+
+        //Checks the master list of weapons and writes out their information.
         public void ArsenalListing()
         {
             int placeholder;
@@ -42,7 +42,6 @@ namespace CRPG
                     tmpWeapon.bDamage = int.Parse(Values[3]);
                     tmpWeapon.StrMod = int.Parse(Values[4]);
                     tmpWeapon.DexMod = int.Parse(Values[5]);
-                    //tmpWeapon.truDamage = int.Parse(Values[6]);
                     tmpWeapon.ammoPerShot = int.Parse(Values[7]);
                     tmpWeapon.ammoInMag = int.Parse(Values[8]);
                     tmpWeapon.ownedByPlayer = bool.Parse(Values[9]);
@@ -56,10 +55,11 @@ namespace CRPG
                 Console.WriteLine($"Name: {it.name}\nPrice: {it.price}\nRange: {it.maxRange}\nDamage: {placeholder}\nPlayer-Owned: {it.ownedByPlayer}");
             }
         }
+
+        //Functionaly the same as ArsenalListing, although this doesn't print out the info. 
+        //Used at the start of the script to spawn all the weapons.
         public void ArsenalInstantiation()
         {
-            //int placeholder;
-
             using (StreamReader sr = new StreamReader("WeaponStats1.csv"))
             {
                 sr.ReadLine();
@@ -74,7 +74,6 @@ namespace CRPG
                     tmpWeapon.bDamage = int.Parse(Values[3]);
                     tmpWeapon.StrMod = int.Parse(Values[4]);
                     tmpWeapon.DexMod = int.Parse(Values[5]);
-                    //tmpWeapon.truDamage = int.Parse(Values[6]);
                     tmpWeapon.ammoPerShot = int.Parse(Values[7]);
                     tmpWeapon.ammoInMag = int.Parse(Values[8]);
                     tmpWeapon.ownedByPlayer = bool.Parse(Values[9]);
@@ -84,6 +83,9 @@ namespace CRPG
             }
             
         }
+
+        //Similarly to the arsenal voids, this checks PlayerInv.csv for weapons. 
+        //If it finds any, they are added to the players current inventory.
         public void InventoryInstantiation()
         {
             using (StreamReader sr = new StreamReader("PlayerInv.csv"))
@@ -93,14 +95,12 @@ namespace CRPG
                     string line = sr.ReadLine();
                     string[] Values = line.Split(',');
                     Weapons tmpWeapon = new Weapons();
-                    //tmpWeapon.itemID = int.Parse(Values[0]);
                     tmpWeapon.name = Values[0];
                     tmpWeapon.price = int.Parse(Values[1]);
                     tmpWeapon.maxRange = int.Parse(Values[2]);
                     tmpWeapon.bDamage = int.Parse(Values[3]);
                     tmpWeapon.StrMod = int.Parse(Values[4]);
                     tmpWeapon.DexMod = int.Parse(Values[5]);
-                    //tmpWeapon.truDamage = int.Parse(Values[6]);
                     tmpWeapon.ammoPerShot = int.Parse(Values[7]);
                     tmpWeapon.ammoInMag = int.Parse(Values[8]);
                     tmpWeapon.ownedByPlayer = bool.Parse(Values[9]);
@@ -109,6 +109,9 @@ namespace CRPG
                 sr.Close();
             }
         }
+
+        //The same as the previous, except it sends it to a list that is displayed as the previous 
+        //inventory, rather than the current one.
         public void PreviousSaveCheck()
         {
             using (StreamReader sr = new StreamReader("PlayerInv.csv"))
@@ -124,7 +127,6 @@ namespace CRPG
                     tmpWeapon.bDamage = int.Parse(Values[3]);
                     tmpWeapon.StrMod = int.Parse(Values[4]);
                     tmpWeapon.DexMod = int.Parse(Values[5]);
-                    //tmpWeapon.truDamage = int.Parse(Values[6]);
                     tmpWeapon.ammoPerShot = int.Parse(Values[7]);
                     tmpWeapon.ammoInMag = int.Parse(Values[8]);
                     tmpWeapon.ownedByPlayer = bool.Parse(Values[9]);
@@ -134,7 +136,8 @@ namespace CRPG
             }
         }
         
-
+        //WeaponList is an example of how I was originally planning on hard-coding each of the guns
+        //in the game. 
         void WeaponList()
         {
             Weapons[] Armory = new Weapons[3];
