@@ -124,19 +124,51 @@ namespace MathPractice
 
             public Matrix3()
             {
-                m[0] = 1; m[2] = 0; m[3] = 0;
-                m[4] = 0; m[5] = 1; m[6] = 0;
-                m[7] = 0; m[8] = 0; m[9] = 1;
+                m[0] = 1; m[1] = 0; m[2] = 0;
+                m[3] = 0; m[4] = 1; m[5] = 0;
+                m[6] = 0; m[7] = 0; m[8] = 1;
+            }
+            public void SetScaled(float x, float y, float z)
+            {
+                m1 = x; m2 = 0; m3 = 0;
+                m4 = 0; m5 = y; m6 = 0;
+                m7 = 0; m8 = 0; m9 = z;
+            }
+            public void SetScaled(v3 v)
+            {
+                m1 = v.x; m2 = 0; m3 = 0;
+                m4 = 0; m5 = v.y; m6 = 0;
+                m7 = 0; m8 = 0; m9 = v.z;
+            }
+            public void Set(Matrix3 m)
+            {
+
+                //m.m1 = 1; m.m2 = 0; m.m3 = 0;
+                //m.m4 = 0; m.m5 = 1; m.m6 = 0;
+                //m.m7 = 0; m.m8 = 0; m.m9 = 1;
+                //m1 = m.m[0]; m2 = m.m[1]; m3 = m.m[2];
+                //m4 = m.m[3]; m5 = m.m[4]; m6 = m.m[5];
+                //m7 = m.m[6]; m8 = m.m[7]; m9 = m.m[8];
+                m1 = m.m1; m2 = m.m2; m3 = m.m3;
+                m4 = m.m4; m5 = m.m5; m6 = m.m6;
+                m7 = m.m7; m8 = m.m8; m9 = m.m9;
+            }
+            public void Scale(float x, float y, float z)
+            {
+                Matrix3 m = new Matrix3();
+                m.SetScaled(x, y, z);
+
+                Set(this * m);
+            }
+            void Scale(v3 v)
+            {
+                Matrix3 m = new Matrix3();
+                m.SetScaled(v.x, v.y, v.z);
+
+                Set(this * m);
             }
             public Matrix3(float[] tma)
             {
-                //float mm1 = tma[0], mm2 = 0, mm3 = 0, mm4 = 0, mm5 = 0, mm6  = 0, mm7 = 0, mm8 = 0, mm9 = 0;
-                ////m[1] = 1; m[2] = 0; m[3] = 0;
-                ////m[4] = 0; m[5] = 1; m[6] = 0;
-                ////m[7] = 0; m[8] = 0; m[9] = 1;
-                //m[0] = mm1; m[1] = mm2; m[2] = mm3;
-                //m[3] = mm4; m[4] = mm5; m[5] = mm6;
-                //m[6] = mm7; m[7] = mm8; m[8] = mm9;
                 m = tma;
             }
             public Matrix3(float mm1, float mm2, float mm3, float mm4, float mm5, float mm6, float mm7, float mm8, float mm9)
@@ -150,8 +182,6 @@ namespace MathPractice
             }
             public string toString()
             {
-
-
                 return $"{m[0]} {m[1]} {m[2]}\n{m[3]} {m[4]} {m[5]}\n{m[6]} {m[7]} {m[8]}";
             }
             public static Matrix3 operator *(Matrix3 lhs, Matrix3 rhs)
@@ -190,35 +220,7 @@ namespace MathPractice
                     lhs.m[2] * rhs.m[6] + lhs.m[5] * rhs.m[7] + lhs.m[8] * rhs.m[8]
                     );
                     */
-
-                //lhs.m[0] * rhs.m[0] + lhs.m[3] * rhs.m[1] + lhs.m[6] * rhs.m[2],
-                //lhs.m[1] * rhs.m[0] + lhs.m[4] * rhs.m[1] + lhs.m[7] * rhs.m[2],
-                //lhs.m[2] * rhs.m[0] + lhs.m[5] * rhs.m[1] + lhs.m[8] * rhs.m[2],
-                //lhs.m[0] * rhs.m[1] + lhs.m[3] * rhs.m[4] + lhs.m[6] * rhs.m[7],
-                //lhs.m[1] * rhs.m[1] + lhs.m[4] * rhs.m[4] + lhs.m[7] * rhs.m[7],
-                //lhs.m[2] * rhs.m[1] + lhs.m[5] * rhs.m[4] + lhs.m[8] * rhs.m[7],
-                //lhs.m[0] * rhs.m[2] + lhs.m[3] * rhs.m[5] + lhs.m[6] * rhs.m[8],
-                //lhs.m[1] * rhs.m[2] + lhs.m[4] * rhs.m[5] + lhs.m[7] * rhs.m[8],
-                //lhs.m[2] * rhs.m[2] + lhs.m[5] * rhs.m[5] + lhs.m[8] * rhs.m[8]
-                //lhs.m1* rhs.m1 + lhs.m4 * rhs.m4 + lhs.m7 * rhs.m7,
-                //lhs.m2* rhs.m1 + lhs.m5 * rhs.m4 + lhs.m8 * rhs.m7,
-                //lhs.m3* rhs.m1 + lhs.m6 * rhs.m4 + lhs.m9 * rhs.m7,
-                //lhs.m1* rhs.m2 + lhs.m4 * rhs.m5 + lhs.m7 * rhs.m8,
-                //lhs.m2* rhs.m2 + lhs.m5 * rhs.m5 + lhs.m8 * rhs.m8,
-                //lhs.m3* rhs.m2 + lhs.m6 * rhs.m5 + lhs.m9 * rhs.m8,
-                //lhs.m1* rhs.m3 + lhs.m4 * rhs.m6 + lhs.m7 * rhs.m9,
-                //lhs.m2* rhs.m3 + lhs.m5 * rhs.m6 + lhs.m8 * rhs.m9,
-                //lhs.m3* rhs.m3 + lhs.m6 * rhs.m6 + lhs.m9 * rhs.m9
-
-                //lhs.m1 * rhs.m1 + lhs.m4 * rhs.m4 + lhs.m7 * rhs.m7,
-                //lhs.m1 * rhs.m2 + lhs.m4 * rhs.m5 + lhs.m7 * rhs.m8,
-                //lhs.m1 * rhs.m3 + lhs.m4 * rhs.m6 + lhs.m7 * rhs.m9,
-                //lhs.m2 * rhs.m1 + lhs.m5 * rhs.m4 + lhs.m8 * rhs.m7,
-                //lhs.m2 * rhs.m2 + lhs.m5 * rhs.m5 + lhs.m8 * rhs.m8,
-                //lhs.m2 * rhs.m3 + lhs.m5 * rhs.m6 + lhs.m8 * rhs.m9,
-                //lhs.m3 * rhs.m1 + lhs.m6 * rhs.m4 + lhs.m9 * rhs.m7,
-                //lhs.m3 * rhs.m2 + lhs.m6 * rhs.m5 + lhs.m9 * rhs.m8,
-                //lhs.m3 * rhs.m3 + lhs.m6 * rhs.m6 + lhs.m9 * rhs.m9
+                    
             }
         }
         static void Main(string[] args)
@@ -383,12 +385,12 @@ namespace MathPractice
                 }
                 else if (temp == 7)
                 {
-                   
                     bool loop = true;
                     while (loop)
                     {
                         int temp2;
-                        Console.WriteLine("Please select an excercise:\n[1] Matrix Multiplication\n[2] Matrix-Vector Multiplication\n[0] Exit");
+                        Console.WriteLine("Please select an excercise:\n[1] Matrix Multiplication\n[2] Matrix-Vector Multiplication" +
+                            "\n[3] Matrix Scaling\n[0] Exit");
                         int.TryParse(Console.ReadLine(), out temp2);
                         if (temp2 == 1)
                         {
@@ -471,9 +473,44 @@ namespace MathPractice
 
                             Console.WriteLine(result.toString());
                             Console.ReadKey();
-                            //Console.WriteLine("Enter a value for ");
 
                         }
+                        else if(temp2 == 3)
+                        {
+                            char tChar;
+                            float[] mat1 = new float[9];
+                            float[] mat2 = new float[9];
+                            Console.WriteLine("Press [R] for a random matrix, [1] for an identity matrix, or [C] for a custom.");
+                            tChar = char.ToLower(Console.ReadKey(true).KeyChar);
+                            if (tChar == 'c')
+                            {
+                                for (int i = 0; i <= mat1.Length - 1; i++)
+                                {
+                                    Console.WriteLine($"Enter a value for #{i + 1}");
+                                    float.TryParse(Console.ReadLine(), out mat1[i]);
+                                }
+                            }
+                            else if (tChar == '1')
+                            {
+                                mat1[0] = 1;
+                                mat1[4] = 1;
+                                mat1[8] = 1;
+                            }
+                            else
+                            {
+                                Random r = new Random();
+                                Console.WriteLine("Generating a random matrix...");
+                                for (int i = 0; i <= mat1.Length - 1; i++)
+                                {
+                                    mat1[i] = r.Next(0, 1000);
+                                }
+                            }
+                            Matrix3 matrix1 = new Matrix3(mat1);
+                            Console.WriteLine(matrix1.toString());
+                            matrix1.Scale(2,2,2);
+                            Console.WriteLine(matrix1.toString());
+                        }
+                        
                         else
                         {
                             loop = false;
