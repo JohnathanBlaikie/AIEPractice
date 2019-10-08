@@ -37,12 +37,19 @@ namespace MathPractice
         public class v3
         {
             public float x, y, z;
+            public float[] vArray = new float[3];
             public v3(float X, float Y, float Z)
             {
-                x = X;
-                y = Y;
-                z = Z;
+                vArray[0] = X;
+                vArray[1] = Y;
+                vArray[2] = Z;
+
             }
+            public v3(float[] tVA)
+            {
+                vArray = tVA;
+            }
+
             public static v3 operator +(v3 lhs, v3 rhs)
             {
                 return new v3(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z);
@@ -55,6 +62,13 @@ namespace MathPractice
             public static v3 operator *(v3 lhs, float rhs)
             {
                 return new v3(lhs.x * rhs, lhs.y * rhs, lhs.z * rhs);
+            }
+            public static v3 operator *(Matrix3 lhs, v3 rhs)
+            {
+                return new v3(
+                    (lhs.m[0] * rhs.vArray[0]) + (lhs.m[3] * rhs.vArray[1]) + (lhs.m[6] * rhs.vArray[2]),
+                    (lhs.m[1] * rhs.vArray[0]) + (lhs.m[4] * rhs.vArray[1]) + (lhs.m[7] * rhs.vArray[2]),
+                    (lhs.m[2] * rhs.vArray[0]) + (lhs.m[5] * rhs.vArray[1]) + (lhs.m[8] * rhs.vArray[2]));
             }
             public static v3 operator /(v3 lhs, float rhs)
             {
@@ -105,6 +119,10 @@ namespace MathPractice
                 float d = a.x * b.x + a.y * b.y + a.z * b.z;
                 return (float)Math.Acos(d);
             }
+            public string toString()
+            {
+                return $"{vArray[0]} {vArray[1]} {vArray[2]}";
+            }
         }
         public class Calculator
         {
@@ -119,7 +137,7 @@ namespace MathPractice
         }
         public class Matrix3
         {
-            public float m1, m2, m3, m4, m5, m6, m7, m8, m9;
+            //public float m1, m2, m3, m4, m5, m6, m7, m8, m9;
             public float[] m = new float[9];
 
             public Matrix3()
@@ -130,41 +148,34 @@ namespace MathPractice
             }
             public void SetScaled(float x, float y, float z)
             {
-                m1 = x; m2 = 0; m3 = 0;
-                m4 = 0; m5 = y; m6 = 0;
-                m7 = 0; m8 = 0; m9 = z;
+                m[0] = x; m[1] = 0; m[2] = 0;
+                m[3] = 0; m[4] = y; m[5] = 0;
+                m[6] = 0; m[7] = 0; m[8] = z;
             }
             public void SetScaled(v3 v)
             {
-                m1 = v.x; m2 = 0; m3 = 0;
-                m4 = 0; m5 = v.y; m6 = 0;
-                m7 = 0; m8 = 0; m9 = v.z;
+                m[0] = v.x; m[1] = 0; m[2] = 0;
+                m[3] = 0; m[4] = v.y; m[5] = 0;
+                m[6] = 0; m[7] = 0; m[8] = v.z;
             }
-            public void Set(Matrix3 m)
+            public void Set(Matrix3 _m)
             {
-
-                //m.m1 = 1; m.m2 = 0; m.m3 = 0;
-                //m.m4 = 0; m.m5 = 1; m.m6 = 0;
-                //m.m7 = 0; m.m8 = 0; m.m9 = 1;
-                //m1 = m.m[0]; m2 = m.m[1]; m3 = m.m[2];
-                //m4 = m.m[3]; m5 = m.m[4]; m6 = m.m[5];
-                //m7 = m.m[6]; m8 = m.m[7]; m9 = m.m[8];
-                m1 = m.m1; m2 = m.m2; m3 = m.m3;
-                m4 = m.m4; m5 = m.m5; m6 = m.m6;
-                m7 = m.m7; m8 = m.m8; m9 = m.m9;
+                
+                m[0] = _m.m[0]; m[1] = _m.m[1]; m[2] = _m.m[2];
+                m[3] = _m.m[3]; m[4] = _m.m[4]; m[5] = _m.m[5];
+                m[6] = _m.m[6]; m[7] = _m.m[7]; m[8] = _m.m[8];
+                
             }
             public void Scale(float x, float y, float z)
             {
                 Matrix3 m = new Matrix3();
                 m.SetScaled(x, y, z);
-
                 Set(this * m);
             }
             void Scale(v3 v)
             {
                 Matrix3 m = new Matrix3();
                 m.SetScaled(v.x, v.y, v.z);
-
                 Set(this * m);
             }
             public Matrix3(float[] tma)
@@ -221,6 +232,176 @@ namespace MathPractice
                     );
                     */
                     
+            }
+        }
+        public class Matrix4
+        {
+            public float[] m = new float[16];
+            public Matrix4()
+            {
+                m[0] = 1; m[1] = 0; m[2] = 0; m[3] = 0;
+                m[4] = 0; m[5] = 1; m[6] = 0; m[7] = 0;
+                m[8] = 0; m[9] = 0; m[10] = 1; m[11] = 0;
+                m[12] = 0; m[13] = 0; m[14] = 0; m[15] = 1;
+            }
+            public Matrix4(float[] _m)
+            {
+                m = _m;
+            }
+
+            public void Set(Matrix4 _m)
+            {
+                m[0] = _m.m[0]; m[1] = _m.m[1]; m[2] = _m.m[2]; m[3] = _m.m[3];
+                m[4] = _m.m[4]; m[5] = _m.m[5]; m[6] = _m.m[6]; m[7] = _m.m[7];
+                m[8] = _m.m[6]; m[9] = _m.m[9]; m[10] = _m.m[10]; m[11] = _m.m[11];
+                m[12] = _m.m[12]; m[13] = _m.m[13]; m[14] = _m.m[14]; m[15] = _m.m[15];
+            }
+            public void SetScaled(float x, float y, float z)
+            {
+                m[0] = x; m[1] = 0; m[1] = 0; m[2] = 0;
+                m[4] = 0; m[5] = y; m[6] = 0; m[7] = 0;
+                m[8] = 0; m[9] = 0; m[10] = z; m[11] = 0;
+                m[12] = 0; m[13] = 0; m[14] = 0; m[15] = 1;
+            }
+            public void SetRotateX(double radians)
+            {
+                Matrix4 n = new Matrix4();
+                n.m[0] = 1;
+                n.m[4] = (float)Math.Cos(radians);
+                n.m[5] = (float)Math.Sin(radians);
+                n.m[9] = (float)-Math.Sin(radians);
+                n.m[10] = (float)Math.Cos(radians);
+                n.m[15] = 1;
+
+                //Set(m[0] = 1, m[5] = (float)Math.Cos(radians), m[6] = (float)Math.Sin(radians),
+                //    m[9] = (float)-Math.Sin(radians), (float)Math.Cos(radians), m[15] = 1);
+                //Set(1, 0, 0, 0,
+                //    0, (float)Math.Cos(radians), (float)Math.Sin(radians), 0,
+                //    0, (float)-Math.Sin(radians), (float)Math.Cos(radians), 0,
+                //    0, 0, 0, 1);
+                Set(n);
+            }
+            public void SetTranslation(float x, float y, float z)
+            {
+                m[12] = x; m[13] = y; m[14] = z; m[15] = 1;
+            }
+            public void Translate(float x, float y, float z)
+            {
+                m[12] += x; m[13] += y; m[14] += z;
+            }
+            public static Matrix4 operator *(Matrix4 lhs, Matrix4 rhs)
+            {
+                Matrix4 Matty = new Matrix4();
+
+                Matty.m[0] = rhs.m[0] * lhs.m[0] + rhs.m[1] * lhs.m[4] + rhs.m[2] * lhs.m[8] + rhs.m[3] * lhs.m[12];
+                Matty.m[1] = rhs.m[0] * lhs.m[1] + rhs.m[1] * lhs.m[5] + rhs.m[2] * lhs.m[9] + rhs.m[3] * lhs.m[13];
+                Matty.m[2] = rhs.m[0] * lhs.m[2] + rhs.m[1] * lhs.m[6] + rhs.m[2] * lhs.m[10] + rhs.m[3] * lhs.m[14];
+                Matty.m[3] = rhs.m[0] * lhs.m[3] + rhs.m[1] * lhs.m[7] + rhs.m[2] * lhs.m[11] + rhs.m[3] * lhs.m[15];
+
+                Matty.m[4] = rhs.m[4] * lhs.m[0] + rhs.m[5] * lhs.m[4] + rhs.m[6] * lhs.m[8] + rhs.m[7] * lhs.m[12];
+                Matty.m[5] = rhs.m[4] * lhs.m[1] + rhs.m[5] * lhs.m[5] + rhs.m[6] * lhs.m[9] + rhs.m[7] * lhs.m[13];
+                Matty.m[6] = rhs.m[4] * lhs.m[2] + rhs.m[5] * lhs.m[6] + rhs.m[6] * lhs.m[10] + rhs.m[7] * lhs.m[14];
+                Matty.m[7] = rhs.m[4] * lhs.m[3] + rhs.m[5] * lhs.m[7] + rhs.m[6] * lhs.m[11] + rhs.m[7] * lhs.m[15];
+
+                Matty.m[8] = rhs.m[8] * lhs.m[0] + rhs.m[9] * lhs.m[4] + rhs.m[10] * lhs.m[8] + rhs.m[11] * lhs.m[12];
+                Matty.m[9] = rhs.m[8] * lhs.m[1] + rhs.m[9] * lhs.m[5] + rhs.m[10] * lhs.m[9] + rhs.m[11] * lhs.m[13];
+                Matty.m[10] = rhs.m[8] * lhs.m[2] + rhs.m[9] * lhs.m[6] + rhs.m[10] * lhs.m[10] + rhs.m[11] * lhs.m[14];
+                Matty.m[11] = rhs.m[8] * lhs.m[3] + rhs.m[9] * lhs.m[7] + rhs.m[10] * lhs.m[11] + rhs.m[11] * lhs.m[15];
+
+                Matty.m[12] = rhs.m[12] * lhs.m[0] + rhs.m[13] * lhs.m[4] + rhs.m[14] * lhs.m[8] + rhs.m[15] * lhs.m[12];
+                Matty.m[13] = rhs.m[12] * lhs.m[1] + rhs.m[13] * lhs.m[5] + rhs.m[14] * lhs.m[9] + rhs.m[15] * lhs.m[13];
+                Matty.m[14] = rhs.m[12] * lhs.m[2] + rhs.m[13] * lhs.m[6] + rhs.m[14] * lhs.m[10] + rhs.m[15] * lhs.m[14];
+                Matty.m[15] = rhs.m[12] * lhs.m[3] + rhs.m[13] * lhs.m[7] + rhs.m[14] * lhs.m[11] + rhs.m[15] * lhs.m[15];
+
+
+                return Matty;
+            }
+        }
+        public class v4
+        {
+            public float[] v = new float[4];
+
+            public v4(float[] vec4)
+            {
+                v = vec4;
+            }
+            public v4(float x, float y, float z, float w)
+            {
+                v[0] = x;
+                v[1] = y;
+                v[2] = z;
+                v[3] = w;
+            }
+            public v4()
+            {
+                v[0] = 0;
+                v[1] = 0;
+                v[2] = 0;
+                v[3] = 0;
+            }
+            public static v4 operator +(v4 lhs, v4 rhs)
+            {
+                return new v4
+                    (
+                    lhs.v[0] + rhs.v[0],
+                    lhs.v[1] + rhs.v[1],
+                    lhs.v[2] + rhs.v[2],
+                    lhs.v[3] + rhs.v[3]
+                    );
+            }
+            public static v4 operator -(v4 lhs, v4 rhs)
+            {
+                return new v4
+                    (
+                    lhs.v[0] - rhs.v[0],
+                    lhs.v[1] - rhs.v[1],
+                    lhs.v[2] - rhs.v[2],
+                    lhs.v[3] - rhs.v[3]
+                    );
+            }
+            public static v4 operator *(v4 lhs, float rhs)
+            {
+                return new v4
+                    (
+                    lhs.v[0] * rhs,
+                    lhs.v[1] * rhs,
+                    lhs.v[2] * rhs,
+                    lhs.v[3] * rhs
+                    ); 
+            }
+            public static v4 operator *(Matrix4 lhs, v4 rhs)
+            {
+                return new v4(
+                (rhs.v[0] * lhs.m[0]) + (rhs.v[1] * lhs.m[4]) + (rhs.v[2] * lhs.m[8]) + (rhs.v[3] * lhs.m[12]),
+                (rhs.v[0] * lhs.m[1]) + (rhs.v[1] * lhs.m[5]) + (rhs.v[2] * lhs.m[9]) + (rhs.v[3] * lhs.m[13]),
+                (rhs.v[0] * lhs.m[2]) + (rhs.v[1] * lhs.m[6]) + (rhs.v[2] * lhs.m[10]) + (rhs.v[3] * lhs.m[14]),
+                (rhs.v[0] * lhs.m[3]) + (rhs.v[1] * lhs.m[7]) + (rhs.v[2] * lhs.m[11]) + (rhs.v[3] * lhs.m[15])
+                );
+            }
+            public float Magnitude()
+            {
+                return (float)Math.Sqrt((double)(v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3]));
+            }
+            public void Normalize()
+            {
+                float m = Magnitude();
+                v[0] /= m;
+                v[1] /= m;
+                v[2] /= m;
+                v[3] /= m;
+
+            }
+            public float Dot(v4 rhs)
+            {
+                return v[0] * rhs.v[0] + v[1] * rhs.v[1] + v[2] * rhs.v[2] + v[3] * rhs.v[3];
+            }
+            public v4 Cross(v4 rhs)
+            {
+                return new v4(
+                    v[1] * rhs.v[2] - v[2] * rhs.v[1],
+                    v[2] * rhs.v[0] - v[0] * rhs.v[2],
+                    v[0] * rhs.v[1] - v[1] * rhs.v[0],
+                    0);
             }
         }
         static void Main(string[] args)
@@ -475,11 +656,67 @@ namespace MathPractice
                             Console.ReadKey();
 
                         }
+                        else if(temp2 == 2)
+                        {
+                            char tChar;
+                            float[] mat1 = new float[9];
+                            float[] vec = new float[3];
+                            Console.WriteLine("Press [R] for a random vector, or [C] for a custom.");
+                            tChar = char.ToLower(Console.ReadKey(true).KeyChar);
+                            if (tChar == 'c')
+                            {
+                                for (int i = 0; i <= vec.Length - 1; i++)
+                                {
+                                    Console.WriteLine($"Enter a value for #{i + 1}");
+                                    float.TryParse(Console.ReadLine(), out vec[i]);
+                                }
+                            }
+                            else
+                            {
+                                Random r = new Random();
+                                Console.WriteLine("Generating a random vector...");
+                                for (int i = 0; i <= vec.Length - 1; i++)
+                                {
+                                    vec[i] = r.Next(0, 1000);
+                                }
+                            }
+                            Console.WriteLine("Press [R] for a random matrix, [1] for an identity matrix, or [C] for a custom.");
+                            tChar = char.ToLower(Console.ReadKey(true).KeyChar);
+                            if (tChar == 'c')
+                            {
+                                for (int i = 0; i <= mat1.Length - 1; i++)
+                                {
+                                    Console.WriteLine($"Enter a value for #{i + 1}");
+                                    float.TryParse(Console.ReadLine(), out mat1[i]);
+                                }
+                            }
+                            else if (tChar == '1')
+                            {
+                                mat1[0] = 1;
+                                mat1[4] = 1;
+                                mat1[8] = 1;
+                            }
+                            else
+                            {
+                                Random r = new Random();
+                                Console.WriteLine("Generating a random matrix...");
+                                for (int i = 0; i <= mat1.Length - 1; i++)
+                                {
+                                    mat1[i] = r.Next(0, 1000);
+                                }
+                            }
+                            Matrix3 MatXVec = new Matrix3(mat1);
+                            v3 vec3 = new v3(vec);
+
+                            Console.WriteLine(MatXVec.toString());
+                            Console.WriteLine(vec3.toString());
+                            v3 result = MatXVec * vec3;
+                            Console.WriteLine(result.toString());
+                        }
                         else if(temp2 == 3)
                         {
                             char tChar;
                             float[] mat1 = new float[9];
-                            float[] mat2 = new float[9];
                             Console.WriteLine("Press [R] for a random matrix, [1] for an identity matrix, or [C] for a custom.");
                             tChar = char.ToLower(Console.ReadKey(true).KeyChar);
                             if (tChar == 'c')
@@ -507,7 +744,10 @@ namespace MathPractice
                             }
                             Matrix3 matrix1 = new Matrix3(mat1);
                             Console.WriteLine(matrix1.toString());
-                            matrix1.Scale(2,2,2);
+                            Console.WriteLine("Enter a number to scale your matrix by.");
+                            int scaleInt;
+                            int.TryParse(Console.ReadLine(), out scaleInt);
+                            matrix1.Scale(scaleInt,scaleInt,scaleInt);
                             Console.WriteLine(matrix1.toString());
                         }
                         
