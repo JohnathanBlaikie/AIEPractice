@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace MathClasses
 {
-    public class Colour
+    public class Color
     {
-        public UInt32 colour;
+        public UInt32 color;
 
-        public Colour()
+        public Color()
         {
-            colour = 0;
+            color = 0;
         }
 
     }

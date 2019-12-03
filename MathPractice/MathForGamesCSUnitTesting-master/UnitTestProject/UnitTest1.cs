@@ -25,7 +25,7 @@ namespace UnitTestProject
             return true;
         }
 
-        bool compare(v4 a, v4 b, float tolerance = DEFAULT_TOLERANCE)
+        bool compare(Vector4 a, Vector4 b, float tolerance = DEFAULT_TOLERANCE)
         {
             if (Math.Abs(a.v[0] - b.v[0]) > tolerance ||
                 Math.Abs(a.v[1] - b.v[1]) > tolerance ||
@@ -46,10 +46,10 @@ namespace UnitTestProject
 
         bool compare(Matrix4 a, Matrix4 b, float tolerance = DEFAULT_TOLERANCE)
         {
-            if (Math.Abs(a.m[0] - b.m[0]) > tolerance || Math.Abs(a.m[1] - b.m[1]) > tolerance || Math.Abs(a.m[2] - b.m[2]) > tolerance || Math.Abs(a.m4 - b.m4) > tolerance ||
-                Math.Abs(a.m[4] - b.m[4]) > tolerance || Math.Abs(a.m[5] - b.m[5]) > tolerance || Math.Abs(a.m[6] - b.m[6]) > tolerance || Math.Abs(a.m8 - b.m8) > tolerance ||
-                Math.Abs(a.m[8] - b.m[8]) > tolerance || Math.Abs(a.m[9] - b.m[9]) > tolerance || Math.Abs(a.m[10] - b.m[10]) > tolerance || Math.Abs(a.m12 - b.m12) > tolerance ||
-                Math.Abs(a.m[12] - b.m[12]) > tolerance || Math.Abs(a.m[13] - b.m[13]) > tolerance || Math.Abs(a.m[14] - b.m[14]) > tolerance || Math.Abs(a.m16 - b.m16) > tolerance)
+            if (Math.Abs(a.m1 - b.m1) > tolerance || Math.Abs(a.m2 - b.m2) > tolerance || Math.Abs(a.m3 - b.m3) > tolerance || Math.Abs(a.m4 - b.m4) > tolerance ||
+                Math.Abs(a.m5 - b.m5) > tolerance || Math.Abs(a.m6 - b.m6) > tolerance || Math.Abs(a.m7 - b.m7) > tolerance || Math.Abs(a.m8 - b.m8) > tolerance ||
+                Math.Abs(a.m9 - b.m9) > tolerance || Math.Abs(a.m10 - b.m10) > tolerance || Math.Abs(a.m11 - b.m11) > tolerance || Math.Abs(a.m12 - b.m12) > tolerance ||
+                Math.Abs(a.m13 - b.m13) > tolerance || Math.Abs(a.m14 - b.m14) > tolerance || Math.Abs(a.m15 - b.m15) > tolerance || Math.Abs(a.m16 - b.m16) > tolerance)
                 return false;
             return true;
         }
@@ -116,7 +116,7 @@ namespace UnitTestProject
         public void Vector3PreScale()
         {
             Vector3 v3a = new Vector3(13.5f, -48.23f, 862);
-            Vector3 v3c = 0.256f * v3a;
+            Vector3 v3c = v3a * 0.256f;
 
             Assert.IsTrue(compare(new Vector3(3.45600008965f, -12.3468809128f, 220.672012329f), v3c));
         }

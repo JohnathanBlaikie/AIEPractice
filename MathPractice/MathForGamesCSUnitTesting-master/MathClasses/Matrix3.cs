@@ -20,13 +20,14 @@ namespace MathClasses
             m[3] = 0; m[4] = 1; m[5] = 0;
             m[6] = 0; m[7] = 0; m[8] = 1;
         }
+       
         public void SetScaled(float x, float y, float z)
         {
             m[0] = x; m[1] = 0; m[2] = 0;
             m[3] = 0; m[4] = y; m[5] = 0;
             m[6] = 0; m[7] = 0; m[8] = z;
         }
-        public void SetScaled(v3 v)
+        public void SetScaled(Vector3 v)
         {
             m[0] = v.x; m[1] = 0; m[2] = 0;
             m[3] = 0; m[4] = v.y; m[5] = 0;
@@ -40,13 +41,20 @@ namespace MathClasses
             m[6] = _m.m[6]; m[7] = _m.m[7]; m[8] = _m.m[8];
 
         }
+        public void Set(float m1, float m2, float m3, float m4, float m5, float m6, float m7, float m8, float m9)
+        {
+            m[0] = m1; m[1] = m2; m[2] = m3;
+            m[3] = m4; m[4] = m5; m[5] = m6;
+            m[6] = m7; m[7] = m6; m[8] = m9;
+        }
+
         public void Scale(float x, float y, float z)
         {
             Matrix3 m = new Matrix3();
             m.SetScaled(x, y, z);
             Set(this * m);
         }
-        void Scale(v3 v)
+        void Scale(Vector3 v)
         {
             Matrix3 m = new Matrix3();
             m.SetScaled(v.x, v.y, v.z);
@@ -69,6 +77,25 @@ namespace MathClasses
         {
             return $"{m[0]} {m[1]} {m[2]}\n{m[3]} {m[4]} {m[5]}\n{m[6]} {m[7]} {m[8]}";
         }
+        public void SetRotateX(double radians)
+        {
+            Set(1, 0, 0, 
+                0, (float)Math.Cos(radians), (float)Math.Sin(radians), 0, 
+                (float)-Math.Sin(radians), (float)Math.Cos(radians));
+        }
+        public void SetRotateY(double radians)
+        {
+            Set((float)Math.Cos(radians), 0, -(float)Math.Sin(radians),
+                0, 1, 0,
+                (float)Math.Sin(radians), 0, (float)Math.Cos(radians));
+        }
+        public void SetRotateZ(double radians)
+        {
+            Set((float)Math.Cos(radians), (float)Math.Sin(radians), 0,
+                (float)-Math.Sin(radians), (float)Math.Cos(radians), 0,
+                0,0,1);
+        }
+
         public static Matrix3 operator *(Matrix3 lhs, Matrix3 rhs)
         {
             return new Matrix3(
