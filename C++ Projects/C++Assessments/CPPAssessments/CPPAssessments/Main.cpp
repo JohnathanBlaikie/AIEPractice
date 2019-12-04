@@ -9,29 +9,31 @@ using std::endl;
 
 int main() {
 	int eChoice = 0;
-	int dim1 = 0, dim2 = 0;
-	while ((dim1 <= 0 || dim1 > 15) && (dim2 <= 0 || dim2 > 15)) {
+	int dimX = 0, dimY = 0;
+	int iR = 0, iC = 0, iD = 0;
+	int rC = 0, cC = 0;
+	while ((dimX <= 0 || dimX > 15) && (dimY <= 0 || dimY > 15)) {
 		cout << "Tic-Tac-Toe\n\nPlease enter a number between 1 - 15 for the dimensions of your grid:\nDimension X: ";
-		cin >> dim1;
+		cin >> dimX;
 		cout << "\nDimension Y: ";
-		cin >> dim2;
+		cin >> dimY;
 		cout << endl;
 	}
 	//std::list 
-	int yep = dim1 * dim2;
-	char *gridArray = new char[yep]; 
-	int gALen = sizeof(gridArray) / sizeof(gridArray[0]);
+	int dimA = dimX * dimY;
+	char *gridArray = new char[dimA]; 
+	//int gALen = sizeof(gridArray) / sizeof(gridArray[0]);
 	bool gamin = true;
 	bool player1Turn = true;
 	
 	while (gamin) {
 		int squareCounter = 1;
-		for (int i = 0; i < dim2; i++)
+		for (int i = 0; i < dimY; i++)
 		{
 			cout << endl;
-			for (int i = 0; i < dim1 -1; i++)
+			for (int i = 0; i < dimX -1; i++)
 			{
-				if (i < dim2) {
+				if (i < dimY) {
 					cout << "\t|";
 				}
 				else {
@@ -39,7 +41,7 @@ int main() {
 				}
 			}
 			cout << endl;
-			for (int i = 0; i < dim1; i++) {
+			for (int i = 0; i < dimX; i++) {
 				
 
 				if (i < 1 && squareCounter < 10 && (gridArray[squareCounter -1] != 'X' && gridArray[squareCounter -1] != 'O')) {
@@ -96,7 +98,7 @@ int main() {
 
 
 		cout << "\nChosen tiles: \n";
-		for (int j = 0; j < yep; j++) {
+		for (int j = 0; j < dimA; j++) {
 			if (gridArray[j] == 'X' || gridArray[j] == 'O') {
 				cout << j + 1 << " " << gridArray[j] << " ";
 			}
@@ -104,15 +106,108 @@ int main() {
 		cout << endl << endl;
 		if (player1Turn) {
 			cout << "Player 1, Choose a section: ";
-			cin >> eChoice;
-			gridArray[eChoice - 1] = 'X';
+			while (true) {
+				cin >> eChoice;
+				if (gridArray[eChoice - 1] != 'O')
+				{
+					gridArray[eChoice - 1] = 'X';
+					break;
+				}
+				else {
+					cout << "That section has already been chosen, please choose another.\n";
+				}
+			}
 			player1Turn = false;
 		}
 		else {
 			cout << "Player 2, Choose a section: ";
-			cin >> eChoice;
-			gridArray[eChoice - 1] = 'O';
+			while (true) {
+				cin >> eChoice;
+				if (gridArray[eChoice - 1] != 'X')
+				{
+					gridArray[eChoice - 1] = 'O';
+					break;
+				}
+				else {
+					cout << "That section has already been chosen, please choose another.\n";
+				}
+			}
 			player1Turn = true;
+		}
+		iD = 0;
+		if (dimX == dimY) {
+			
+			for (int i = 0; i < dimA; i += (dimX + 1))
+			{
+				if (gridArray[i] == 'O' && gridArray[i + (dimX + 1)]  == 'O' || gridArray[i] == 'X' && gridArray[i + (dimX + 1)] == 'X')
+				{
+					iD++;	
+					if (iD == dimX - 1)
+					{
+						cout << "\nThe Game is Over!\n";
+					}
+				}
+				else {
+					iD = 0;
+				}
+			}
+			iD = 0;
+			for (int j = 0; j < dimA; j += (dimX - 1))
+			{
+				if (gridArray[j] == 'O' && gridArray[j + (dimX - 1)] == 'O' || gridArray[j] == 'X' && gridArray[j + (dimX - 1)] == 'X')
+				{
+					iD++;
+					if (iD == dimX - 1)
+					{
+						cout << "\nThe Game is Over!\n";
+					}
+				}
+				else
+				{
+					iD = 0;
+				}
+			}
+		}
+		rC = 0;
+		for (int r = 0; r < dimY; r++) {
+			
+			for (rC; rC < dimX * r; rC++) 
+			{
+				if (gridArray[rC] == 'O' && gridArray[rC + 1] == 'O' || gridArray[rC] == 'X' && gridArray[rC + 1] == 'X') 
+				{
+					iR++;
+					if (iR == dimX - 1)
+					{
+						cout << "\nThe Game is Over!\n";
+					}
+				}
+				else
+				{
+					iR = 0;
+				}
+			}
+			rC -= (dimX - 1);
+			rC *= dimX;
+		}
+		cC = 0;
+		for (int c = 0; c < dimX; c++) {
+			for (cC; cC < dimA; cC += (dimX))
+			{
+				if (gridArray[cC] == 'O' && gridArray[cC + dimX] == 'O' || gridArray[cC] == 'X' && gridArray[cC + dimX] == 'X')
+				{
+					iC++;
+					if (iC == dimY - 1)
+					{
+						cout << "\nThe Game is Over!\n";
+					}
+				}
+				else {
+					iC = 0;
+				}
+			}
+			cC /= dimY;
+			cC++;
+
 		}
 		//cin >> eChoice;
 	}
