@@ -5,9 +5,9 @@ class Marine : public Entity
 public:
 	Marine();
 
-	int attack();
+	int attack() override;
 	int squadSize();
-	void takeDamage(int damage);
+	void takeDamage(int damage) override;
 
 	~Marine();
 };

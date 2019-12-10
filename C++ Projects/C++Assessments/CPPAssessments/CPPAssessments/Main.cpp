@@ -12,7 +12,7 @@ int main() {
 	int dimX = 0, dimY = 0;
 	int iR = 0, iC = 0, iD = 0;
 	int rC = 0, cC = 0;
-	while ((dimX <= 0 || dimX > 15) && (dimY <= 0 || dimY > 15)) {
+	while ((dimX <= 0 || dimX > 15) || (dimY <= 0 || dimY > 15)) {
 		cout << "Tic-Tac-Toe\n\nPlease enter a number between 1 - 15 for the dimensions of your grid:\nDimension X: ";
 		cin >> dimX;
 		cout << "\nDimension Y: ";

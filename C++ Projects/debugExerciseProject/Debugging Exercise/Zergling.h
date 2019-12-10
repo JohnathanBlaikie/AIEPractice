@@ -5,11 +5,9 @@ class Zergling : public Entity
 {
 public:
 	Zergling();
-
-	int attack();
-	int squadSize();
-	void takeDamage(int damage);
-
+	Zergling(int zHP, int atk);
 	~Zergling();
+	void takeDamage(int damage) override;
+	int attack() override;
 };
 
