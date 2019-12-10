@@ -22,10 +22,14 @@ int main() {
 	//std::list 
 	int dimA = dimX * dimY;
 	char *gridArray = new char[dimA]; 
+	int **gridArray2 = new int*[dimX];
 	//int gALen = sizeof(gridArray) / sizeof(gridArray[0]);
 	bool gamin = true;
 	bool player1Turn = true;
 	
+	for (int i = 0; i < dimX; ++i) {
+		gridArray2[i] = new int[dimY];
+	}
 	while (gamin) {
 		int squareCounter = 1;
 		for (int i = 0; i < dimY; i++)
@@ -41,6 +45,7 @@ int main() {
 				}
 			}
 			cout << endl;
+#pragma region 1dArray
 			for (int i = 0; i < dimX; i++) {
 				
 
@@ -94,6 +99,62 @@ int main() {
 				squareCounter++;
 			}
 		}
+#pragma endregion
+#pragma region 2dArray
+//		for (int i = 0; i < dimX; i++) {
+//
+//
+//			if (i < 1 && squareCounter < 10 && (gridArray2[squareCounter - 1][i] != 'X' && gridArray2[squareCounter - 1][i] != 'O')) {
+//
+//				cout << " __[" << squareCounter << "]__";
+//			}
+//			else if (i < 1 && squareCounter < 10 && (gridArray2[squareCounter - 1][i] == 'X' || gridArray2[squareCounter - 1][i] == 'O'))
+//			{
+//				cout << " __[" << gridArray[squareCounter - 1] << "]__";
+//			}
+//			else if (i >= 1 && squareCounter < 10 && (gridArray2[squareCounter - 1][i] == 'X' || gridArray2[squareCounter - 1][i] == 'O'))
+//			{
+//				cout << "|__[" << gridArray[squareCounter - 1] << "]__";
+//			}
+//
+//
+//			else if (i < 1 && squareCounter >= 10 && squareCounter < 100 && (gridArray2[squareCounter - 1][i] != 'X' && gridArray2[squareCounter - 1][i] != 'O'))
+//			{
+//				cout << " _[" << squareCounter << "]__";
+//			}
+//			else if (i < 1 && squareCounter >= 10 && (gridArray2[squareCounter - 1][i] == 'X' || gridArray2[squareCounter - 1][i] == 'O'))
+//			{
+//				cout << " __[" << gridArray[squareCounter - 1] << "]__";
+//			}
+//			else if (i >= 1 && squareCounter >= 10 && squareCounter < 100 && (gridArray2[squareCounter - 1][i] != 'X' && gridArray2[squareCounter - 1][i] != 'O'))
+//			{
+//				cout << "|_[" << squareCounter << "]__";
+//			}
+//			else if (i >= 1 && squareCounter >= 10 && (gridArray[squareCounter - 1] == 'X' || gridArray[squareCounter - 1] == 'O'))
+//			{
+//				cout << "|__[" << gridArray[squareCounter - 1] << "]__";
+//			}
+//
+//
+//			else if (i < 1 && squareCounter >= 100)
+//			{
+//				cout << " _[" << squareCounter << "]_";
+//			}
+//			else if (i >= 1 && squareCounter >= 100)
+//			{
+//				cout << "|_[" << squareCounter << "]_";
+//			}
+//
+//
+//			else
+//			{
+//				cout << "|__[" << squareCounter << "]__";
+//			}
+//
+//			squareCounter++;
+//		
+//	}
+#pragma endregion
 
 
 
@@ -145,6 +206,7 @@ int main() {
 					if (iD == dimX - 1)
 					{
 						cout << "\nThe Game is Over!\n";
+						gamin = false;
 					}
 				}
 				else {
@@ -152,7 +214,7 @@ int main() {
 				}
 			}
 			iD = 0;
-			for (int j = 0; j < dimA; j += (dimX - 1))
+			for (int j = dimX-1; j < dimA; j += (dimX - 1))
 			{
 				if (gridArray[j] == 'O' && gridArray[j + (dimX - 1)] == 'O' || gridArray[j] == 'X' && gridArray[j + (dimX - 1)] == 'X')
 				{
@@ -160,6 +222,7 @@ int main() {
 					if (iD == dimX - 1)
 					{
 						cout << "\nThe Game is Over!\n";
+						gamin = false;
 					}
 				}
 				else
@@ -168,10 +231,11 @@ int main() {
 				}
 			}
 		}
-		rC = 0;
+		//rC = 0;
+		
 		for (int r = 0; r < dimY; r++) {
-			
-			for (rC; rC < dimX * r; rC++) 
+			iR = 0;
+			for (rC=r*dimY; rC < (dimX * r)-1; rC++) 
 			{
 				if (gridArray[rC] == 'O' && gridArray[rC + 1] == 'O' || gridArray[rC] == 'X' && gridArray[rC + 1] == 'X') 
 				{
@@ -179,6 +243,7 @@ int main() {
 					if (iR == dimX - 1)
 					{
 						cout << "\nThe Game is Over!\n";
+						gamin = false;
 					}
 				}
 				else
@@ -190,7 +255,9 @@ int main() {
 			rC *= dimX;
 		}
 		cC = 0;
-		for (int c = 0; c < dimX; c++) {
+		for (int c = 0; c < dimX; c++) 
+		{
+			cC = c;
 			for (cC; cC < dimA; cC += (dimX))
 			{
 				if (gridArray[cC] == 'O' && gridArray[cC + dimX] == 'O' || gridArray[cC] == 'X' && gridArray[cC + dimX] == 'X')
@@ -199,18 +266,26 @@ int main() {
 					if (iC == dimY - 1)
 					{
 						cout << "\nThe Game is Over!\n";
+						gamin = false;
 					}
 				}
 				else {
 					iC = 0;
 				}
 			}
-			cC /= dimY;
-			cC++;
-
 		}
-		//cin >> eChoice;
+		int bruh = 0;
+		for (int catsGame = 0; catsGame < dimA; catsGame++) {
+			if (gridArray[catsGame] == 'X' || gridArray[catsGame] == 'O') {
+				bruh++;
+			}
+			if (bruh == dimA) {
+				cout << "\nThe game is a Tie!\n";
+			}
+		}
 	}
+		cin >> eChoice;
+
 
 
 	delete gridArray;
