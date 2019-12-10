@@ -6,6 +6,7 @@ Zergling::Zergling()
 {
 	maxHealth = 20;
 	health = maxHealth;
+	attack = 10;
 }
 
 Zergling::Zergling(int zHP, int atk) {
@@ -14,9 +15,9 @@ Zergling::Zergling(int zHP, int atk) {
 	attack = atk;
 }
 
-int Zergling::attack()
+int Zergling::iAttack()
 {
-	return atk;
+	return attack;
 }
 
 void Zergling::takeDamage(int damage)

@@ -8,14 +8,14 @@ Entity::Entity()
 
 bool Entity::isAlive()
 {
-	return health == 0;
+	return health != 0;
 }
 
 Entity::~Entity()
 {
 }
 
-int Entity::attack()
+int Entity::iAttack()
 {
 	return 0;
 }

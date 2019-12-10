@@ -4,11 +4,11 @@ class Marine : public Entity
 {
 public:
 	Marine();
-
-	int attack() override;
+	Marine(int mHP, int atk);
+	~Marine();
+	int iAttack() override;
 	int squadSize();
 	void takeDamage(int damage) override;
 
-	~Marine();
 };
 
