@@ -46,7 +46,7 @@ int main()
 			}
 			else
 			{
-				cout << "Right, I'm going to assume you are, althought you may not be intelligent.\n";
+				cout << "Right, I'm going to assume you are. Though you may not be as truthful as I thought.\n";
 				isAlive = true;
 			}
 			cout << "Enter a number";
